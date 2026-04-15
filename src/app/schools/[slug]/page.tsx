@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { getSchool, nearbySchools, schools, getSchoolColors, schoolLogoBadge, getSchoolEspnId, getSchoolDomain } from "@/lib/schools";
 import { SchoolLogo } from "@/components/SchoolLogo";
 import { ProductImage } from "@/components/ProductImage";
-import { PRODUCTS, CATEGORIES } from "@/lib/products";
+import { PRODUCTS, CATEGORIES, CATEGORY_PHOTOS } from "@/lib/products";
 import { amazonSearch, amazonImage } from "@/lib/amazon";
 
 interface PageProps {
@@ -214,7 +214,7 @@ export default async function SchoolPage({ params }: PageProps) {
 
                     {/* Product image */}
                     <div style={{ aspectRatio: "1", background: "#fafafa", display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden" }}>
-                      <ProductImage src={amazonImage(product.asin)} alt={product.title} padding="1.25rem" fallbackSrc={logoFallback} />
+                      <ProductImage src={amazonImage(product.asin)} alt={product.title} padding="0.75rem" categoryPhoto={CATEGORY_PHOTOS[product.category]} fallbackSrc={logoFallback} />
                     </div>
 
                     {/* Info */}

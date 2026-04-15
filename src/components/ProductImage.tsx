@@ -5,32 +5,30 @@ interface Props {
   src: string;
   alt: string;
   padding?: string;
-  /** Fallback image src (e.g. school logo SVG data URI) shown when the primary image fails. */
+  /** Secondary fallback — category photo URL shown if Amazon CDN fails. */
+  categoryPhoto?: string;
+  /** Final fallback — school logo SVG data URI, always renders. */
   fallbackSrc?: string;
 }
 
-/** Shows Amazon product image. Falls back to fallbackSrc (school logo) on error. */
-export function ProductImage({ src, alt, padding = "1.25rem", fallbackSrc }: Props) {
-  const [failed, setFailed] = useState(false);
+/**
+ * Shows an Amazon product image.
+ * Cascade: Amazon CDN → categoryPhoto (Unsplash) → fallbackSrc (school logo SVG)
+ */
+export function ProductImage({ src, alt, padding = "1.25rem", categoryPhoto, fallbackSrc }: Props) {
+  // idx 0 = src (Amazon), 1 = categoryPhoto, 2 = fallbackSrc
+  const [idx, setIdx] = useState(0);
 
-  if (failed) {
-    if (fallbackSrc) {
-      return (
-        <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center", background: "#f7f4ef", padding: "1.5rem" }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={fallbackSrc} alt={alt} style={{ width: 80, height: 80, objectFit: "contain" }} />
-        </div>
-      );
-    }
-    // Generic placeholder if no fallback provided
+  const srcs = [src, categoryPhoto, fallbackSrc].filter(Boolean) as string[];
+  const current = srcs[Math.min(idx, srcs.length - 1)];
+  const isLast = idx >= srcs.length - 1;
+  const isSvgBadge = current?.startsWith("data:");
+
+  if (isSvgBadge) {
     return (
-      <div style={{ width: "100%", height: "100%", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "0.5rem", background: "#f0ebe0", color: "#9ca3af" }}>
-        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-          <rect x="3" y="3" width="18" height="18" rx="2" />
-          <circle cx="8.5" cy="8.5" r="1.5" />
-          <path d="m21 15-5-5L5 21" />
-        </svg>
-        <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase" }}>No Image</span>
+      <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center", background: "#f7f4ef", padding: "1.5rem" }}>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={current} alt={alt} style={{ width: 80, height: 80, objectFit: "contain" }} />
       </div>
     );
   }
@@ -38,10 +36,10 @@ export function ProductImage({ src, alt, padding = "1.25rem", fallbackSrc }: Pro
   return (
     // eslint-disable-next-line @next/next/no-img-element
     <img
-      src={src}
+      src={current}
       alt={alt}
-      onError={() => setFailed(true)}
-      style={{ width: "100%", height: "100%", objectFit: "contain", padding }}
+      onError={() => { if (!isLast) setIdx(i => i + 1); }}
+      style={{ width: "100%", height: "100%", objectFit: "cover", padding: isSvgBadge ? 0 : padding }}
     />
   );
 }

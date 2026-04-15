@@ -1,8 +1,22 @@
-import { featuredSchools, schools, getSchoolColors, schoolLogoBadge, getSchoolEspnId } from "@/lib/schools";
+import type { Metadata } from "next";
+import { featuredSchools, schools, getSchoolColors, schoolLogoBadge, getSchoolEspnId, getSchoolDomain } from "@/lib/schools";
 import { CATEGORIES, mustHaves } from "@/lib/products";
 import { amazonSearch, amazonImage } from "@/lib/amazon";
 import { SchoolLogo } from "@/components/SchoolLogo";
 import { ProductImage } from "@/components/ProductImage";
+
+export const metadata: Metadata = {
+  title: "College Bed Party Essentials — Dorm Room Essentials by School",
+  description: "Shop dorm room essentials curated for your school's colors. Find bedding, storage, decor, and tech for 2,773+ US colleges. Ships from Amazon.",
+  keywords: ["dorm essentials", "college dorm", "dorm room", "dorm bedding", "college bedding", "dorm decor", "dorm storage"],
+  openGraph: {
+    title: "College Bed Party Essentials",
+    description: "Dorm room essentials matched to your school's exact colors.",
+    url: "https://collegebedpartyessentials.com",
+    siteName: "College Bed Party Essentials",
+    type: "website",
+  },
+};
 
 const FEATURES = [
   { icon: "🏠", title: "Real College Bed Parties", body: "Dorm setups from real students at Ohio State, Alabama, Penn State, Georgia and more.", href: "/gallery", cta: "See the Gallery →", bg: "#ff3d6e", fg: "#fff" },
@@ -11,13 +25,6 @@ const FEATURES = [
   { icon: "📦", title: "Ships from Amazon", body: "Every link goes straight to Amazon. Prime eligible. No markup. No middleman.", href: "/schools", cta: "Start Shopping →", bg: "#FF9900", fg: "#0a0a0f" },
 ];
 
-// Curated Unsplash photo IDs for the inspiration mosaic (all verified working)
-const DORM_PHOTOS = [
-  { id: "1574629810360-7efbbe195018", label: "Cozy Corner", span: 2 },
-  { id: "1598300042247-d088f8ab3a91", label: "Clean & Organized", span: 1 },
-  { id: "1503676260728-1c00da094a0b", label: "Desk Goals", span: 1 },
-  { id: "1562774053-701939374585", label: "String Lights", span: 1 },
-];
 
 export default function HomePage() {
   const featured = featuredSchools(18);
@@ -123,46 +130,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ══ DORM PHOTO MOSAIC ════════════════════════════════ */}
-      <section style={{ background: "var(--ink)", padding: "5rem 1.25rem" }}>
-        <div style={{ maxWidth: 1280, margin: "0 auto" }}>
-          <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", marginBottom: "2rem", flexWrap: "wrap", gap: "1rem" }}>
-            <div>
-              <p style={{ fontSize: 11, fontWeight: 800, color: "var(--accent)", letterSpacing: "0.15em", textTransform: "uppercase", margin: "0 0 0.5rem" }}>Real setups</p>
-              <h2 className="d-lg" style={{ color: "var(--cream)", margin: 0 }}>Dorm Inspiration</h2>
-            </div>
-            <a href="/gallery" className="btn btn-pink" style={{ textDecoration: "none" }}>See Gallery →</a>
-          </div>
-
-          {/* Mosaic: first photo spans 2 cols */}
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gridTemplateRows: "260px 260px", gap: 10 }}>
-            {DORM_PHOTOS.map((photo, i) => (
-              <a
-                key={photo.id}
-                href="/gallery"
-                style={{
-                  display: "block", borderRadius: 16, overflow: "hidden",
-                  position: "relative", textDecoration: "none",
-                  gridColumn: photo.span === 2 ? "span 2" : "span 1",
-                }}
-              >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={`https://images.unsplash.com/photo-${photo.id}?auto=format&fit=crop&w=${photo.span === 2 ? 1000 : 500}&h=560&q=80`}
-                  alt={photo.label}
-                  style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
-                  loading={i === 0 ? "eager" : "lazy"}
-                />
-                <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.28)" }} />
-                <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "1.25rem", background: "linear-gradient(to top, rgba(0,0,0,0.7), transparent)" }}>
-                  <span style={{ fontSize: 13, fontWeight: 800, color: "#fff" }}>{photo.label}</span>
-                </div>
-              </a>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* ══ FEATURED SCHOOLS — BENTO GRID ═══════════════════ */}
       <section style={{ maxWidth: 1280, margin: "0 auto", padding: "5rem 1.25rem" }}>
         <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", marginBottom: "2.5rem", flexWrap: "wrap", gap: "1rem" }}>
@@ -180,6 +147,7 @@ export default function HomePage() {
             const tall = i < 2;
             const [pc, sc] = getSchoolColors(school);
             const espnId = getSchoolEspnId(school);
+            const domain = getSchoolDomain(school);
             const logoSize = tall ? 56 : 38;
             return (
               <a
@@ -199,7 +167,7 @@ export default function HomePage() {
                 {/* Logo top-right */}
                 <div style={{ position: "relative", zIndex: 1, display: "flex", justifyContent: "flex-end" }}>
                   <div style={{ background: "rgba(255,255,255,0.95)", borderRadius: tall ? 14 : 10, padding: tall ? 6 : 4 }}>
-                    <SchoolLogo espnId={espnId} fallbackSvg={schoolLogoBadge(school, logoSize)} alt={school.shortName} size={logoSize} />
+                    <SchoolLogo espnId={espnId} domain={domain} fallbackSvg={schoolLogoBadge(school, logoSize)} alt={school.shortName} size={logoSize} />
                   </div>
                 </div>
                 {/* Name bottom-left */}

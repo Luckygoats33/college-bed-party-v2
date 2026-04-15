@@ -21,6 +21,19 @@ export type ProductCategory =
   | "snacks"
   | "safety";
 
+/** Stable Unsplash photo ID to use when an Amazon product image fails to load. */
+export const CATEGORY_PHOTOS: Record<ProductCategory, string> = {
+  bedding:  "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=600&q=80", // cozy bed
+  storage:  "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80", // organized shelves
+  decor:    "https://images.unsplash.com/photo-1562774053-701939374585?w=600&q=80", // string lights
+  tech:     "https://images.unsplash.com/photo-1593642632599-e6c5c0d48d6e?w=600&q=80", // tech desk
+  bath:     "https://images.unsplash.com/photo-1620626011761-996317702519?w=600&q=80", // bathroom
+  desk:     "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80", // desk setup
+  laundry:  "https://images.unsplash.com/photo-1582735689369-4fe89db7114c?w=600&q=80", // laundry
+  snacks:   "https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=600&q=80", // mini fridge/food
+  safety:   "https://images.unsplash.com/photo-1584820927498-cfe5211fd8bf?w=600&q=80", // first aid
+};
+
 export const CATEGORIES: { id: ProductCategory; label: string; emoji: string; hue: string }[] = [
   { id: "bedding", label: "Bedding & Pillows", emoji: "🛏️", hue: "#ff3d6e" },
   { id: "storage", label: "Storage & Organization", emoji: "📦", hue: "#7c3aed" },
