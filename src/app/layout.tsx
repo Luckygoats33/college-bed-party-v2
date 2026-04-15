@@ -45,10 +45,16 @@ function Nav() {
         {/* Desktop nav */}
         <nav style={{ display: "flex", alignItems: "center", gap: "0.25rem" }}>
           <a href="/schools" style={{ padding: "0.5rem 0.875rem", borderRadius: 10, fontSize: 14, fontWeight: 600, color: "var(--muted)", textDecoration: "none" }}>
-            Schools
+            Colleges
+          </a>
+          <a href="/blog" style={{ padding: "0.5rem 0.875rem", borderRadius: 10, fontSize: 14, fontWeight: 600, color: "var(--muted)", textDecoration: "none" }}>
+            Blog
           </a>
           <a href="/guides" style={{ padding: "0.5rem 0.875rem", borderRadius: 10, fontSize: 14, fontWeight: 600, color: "var(--muted)", textDecoration: "none" }}>
             Guides
+          </a>
+          <a href="/gallery" style={{ padding: "0.5rem 0.875rem", borderRadius: 10, fontSize: 14, fontWeight: 600, color: "var(--muted)", textDecoration: "none" }}>
+            Gallery
           </a>
           <a href="/schools" className="btn btn-dark" style={{ padding: "0.55rem 1.25rem", fontSize: 14 }}>
             Find My School →
@@ -102,19 +108,20 @@ function Footer() {
           ))}
         </div>
         <div>
-          <p style={{ color: "var(--cream)", fontWeight: 700, fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "1rem" }}>Follow Us</p>
+          <p style={{ color: "var(--cream)", fontWeight: 700, fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "1rem" }}>Connect</p>
           {[
             ["📸 Instagram", "https://www.instagram.com/collegebedparty"],
             ["🎵 TikTok", "https://www.tiktok.com/@collegebedparty"],
-            ["🐦 Twitter / X", "https://x.com/collegebedparty"],
+            ["📌 Pinterest", "https://www.pinterest.com/collegebedparty"],
           ].map(([l, h]) => (
             <div key={l} style={{ marginBottom: "0.6rem" }}><a href={h} target="_blank" rel="noopener noreferrer" style={{ color: "rgba(254,252,248,0.55)", textDecoration: "none", fontSize: 12 }}>{l}</a></div>
           ))}
-          <div style={{ marginTop: "1rem", paddingTop: "1rem", borderTop: "1px solid rgba(255,255,255,0.07)" }}>
-            {[["Privacy", "/privacy"], ["Terms", "/terms"]].map(([l, h]) => (
-              <div key={l} style={{ marginBottom: "0.5rem" }}><a href={h} style={{ color: "rgba(254,252,248,0.55)", textDecoration: "none", fontSize: 12 }}>{l}</a></div>
-            ))}
-          </div>
+        </div>
+        <div>
+          <p style={{ color: "var(--cream)", fontWeight: 700, fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "1rem" }}>Legal</p>
+          {[["Privacy Policy", "/privacy"], ["Terms of Use", "/terms"], ["ADA Accessibility", "/ada"], ["Affiliate Disclosure", "/affiliate-disclosure"], ["Contact", "/contact"]].map(([l, h]) => (
+            <div key={l} style={{ marginBottom: "0.5rem" }}><a href={h} style={{ color: "rgba(254,252,248,0.55)", textDecoration: "none", fontSize: 12 }}>{l}</a></div>
+          ))}
         </div>
       </div>
 
