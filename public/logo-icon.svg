@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ff3d6e"/>
+      <stop offset="100%" stop-color="#7c3aed"/>
+    </linearGradient>
+    <linearGradient id="g2" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#ff3d6e"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background pill -->
+  <rect width="80" height="80" rx="18" fill="#0a0a0f"/>
+
+  <!-- Bed frame -->
+  <rect x="8" y="52" width="64" height="10" rx="3" fill="url(#g1)"/>
+  <rect x="8" y="32" width="10" height="30" rx="3" fill="url(#g1)"/>
+  <rect x="62" y="42" width="10" height="20" rx="3" fill="url(#g1)"/>
+
+  <!-- Mattress -->
+  <rect x="18" y="42" width="44" height="12" rx="4" fill="#fefcf8"/>
+  <rect x="20" y="44" width="14" height="8" rx="2.5" fill="#e5e0d6"/>
+
+  <!-- Pennant pole -->
+  <line x1="40" y1="10" x2="40" y2="42" stroke="#fefcf8" stroke-width="2" stroke-linecap="round"/>
+
+  <!-- Pennant -->
+  <polygon points="40,12 62,20 40,28" fill="url(#g2)"/>
+  <circle cx="52" cy="20" r="2" fill="#fefcf8" opacity="0.9"/>
+
+  <!-- Legs -->
+  <rect x="12" y="60" width="6" height="7" rx="2" fill="#fefcf8" opacity="0.3"/>
+  <rect x="62" y="60" width="6" height="7" rx="2" fill="#fefcf8" opacity="0.3"/>
+</svg>
