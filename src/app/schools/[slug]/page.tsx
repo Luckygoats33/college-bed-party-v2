@@ -47,6 +47,7 @@ export default async function SchoolPage({ params }: PageProps) {
   const [pc, sc] = getSchoolColors(school);
   const espnId = getSchoolEspnId(school);
   const svgBadge = schoolLogoBadge(school, 120);
+  const logoFallback = schoolLogoBadge(school, 80);
   const heroTextColor = "#fff"; // always white on colored hero with overlay
 
   const mustHaveCount = PRODUCTS.filter(p => p.tags.includes("must-have")).length;
@@ -212,7 +213,7 @@ export default async function SchoolPage({ params }: PageProps) {
 
                     {/* Product image */}
                     <div style={{ aspectRatio: "1", background: "#fafafa", display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden" }}>
-                      <ProductImage src={amazonImage(product.asin)} alt={product.title} padding="1.25rem" />
+                      <ProductImage src={amazonImage(product.asin)} alt={product.title} padding="1.25rem" fallbackSrc={logoFallback} />
                     </div>
 
                     {/* Info */}
