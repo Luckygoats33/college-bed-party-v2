@@ -87,8 +87,18 @@ function Footer() {
         </div>
         <div>
           <p style={{ color: "var(--cream)", fontWeight: 700, fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "1rem" }}>Regions</p>
-          {[["Southeast (SEC)", "/schools?region=Southeast"], ["Big Ten", "/schools?region=Great+Lakes"], ["West Coast", "/schools?region=Far+West"]].map(([l, h]) => (
-            <div key={l} style={{ marginBottom: "0.6rem" }}><a href={h} style={{ color: "rgba(254,252,248,0.55)", textDecoration: "none" }}>{l}</a></div>
+          {[
+            ["New England", "/schools?region=New+England"],
+            ["Mid East", "/schools?region=Mid+East"],
+            ["Southeast", "/schools?region=Southeast"],
+            ["Great Lakes", "/schools?region=Great+Lakes"],
+            ["Plains", "/schools?region=Plains"],
+            ["Southwest", "/schools?region=Southwest"],
+            ["Rocky Mountains", "/schools?region=Rocky+Mountains"],
+            ["Far West", "/schools?region=Far+West"],
+            ["Outlying Areas", "/schools?region=Outlying+Areas"],
+          ].map(([l, h]) => (
+            <div key={l} style={{ marginBottom: "0.5rem" }}><a href={h} style={{ color: "rgba(254,252,248,0.55)", textDecoration: "none", fontSize: 12 }}>{l}</a></div>
           ))}
         </div>
         <div>

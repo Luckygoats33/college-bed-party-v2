@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { schools, schoolsByState, getSchoolColors, schoolLogoBadge, getSchoolEspnId } from "@/lib/schools";
+import { schools, schoolsByState, getSchoolColors, schoolLogoBadge, getSchoolEspnId, getSchoolDomain } from "@/lib/schools";
 import { SchoolLogo } from "@/components/SchoolLogo";
 
 export const metadata: Metadata = {
@@ -152,7 +152,7 @@ export default async function SchoolsPage({ searchParams }: PageProps) {
                   <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.28)", borderRadius: "inherit" }} />
                   {/* Logo badge */}
                   <div style={{ position: "absolute", top: 8, right: 8, background: "rgba(255,255,255,0.95)", borderRadius: 8, padding: 3 }}>
-                    <SchoolLogo espnId={getSchoolEspnId(school)} fallbackSvg={schoolLogoBadge(school, 28)} alt={school.shortName} size={28} />
+                    <SchoolLogo espnId={getSchoolEspnId(school)} domain={getSchoolDomain(school)} fallbackSvg={schoolLogoBadge(school, 28)} alt={school.shortName} size={28} />
                   </div>
                   <div style={{ position: "relative", zIndex: 1 }}>
                     <p style={{ color: "rgba(255,255,255,0.55)", fontSize: 10, fontWeight: 600, margin: 0 }}>{school.city}, {school.state}</p>

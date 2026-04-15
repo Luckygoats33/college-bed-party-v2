@@ -94,9 +94,10 @@ export function getSchoolColors(school: School): [string, string] {
   return VIBRANT_PALETTES[idx];
 }
 
-// ── ESPN NCAA team logo IDs for featured schools ──────────────────────────────
+// ── ESPN NCAA team logo IDs ────────────────────────────────────────────────────
 // URL: https://a.espncdn.com/i/teamlogos/ncaa/500/{id}.png
 const ESPN_IDS: Record<string, number> = {
+  // Power 4 / major programs
   "ohio-state-university-main-campus": 194,
   "the-university-of-alabama": 333,
   "pennsylvania-state-university-main-campus": 213,
@@ -119,6 +120,56 @@ const ESPN_IDS: Record<string, number> = {
   "university-of-arizona": 12,
   "university-of-california-los-angeles": 26,
   "university-of-southern-california": 30,
+  // Additional major programs
+  "duke-university": 150,
+  "university-of-kentucky": 96,
+  "university-of-kansas": 2305,
+  "kansas-state-university": 2306,
+  "university-of-notre-dame": 87,
+  "stanford-university": 24,
+  "university-of-oregon": 2483,
+  "oregon-state-university": 204,
+  "university-of-washington-seattle-campus": 264,
+  "washington-state-university": 265,
+  "university-of-utah": 254,
+  "the-university-of-texas-at-arlington": 251,
+  "texas-am-university": 245,
+  "texas-tech-university": 2641,
+  "baylor-university": 239,
+  "university-of-oklahoma": 201,
+  "oklahoma-state-university-main-campus": 197,
+  "texas-christian-university": 2628,
+  "west-virginia-university": 277,
+  "university-of-iowa": 2294,
+  "iowa-state-university": 66,
+  "university-of-nebraska-lincoln": 158,
+  "university-of-minnesota-twin-cities": 135,
+  "michigan-state-university": 127,
+  "northwestern-university": 77,
+  "purdue-university-main-campus": 2509,
+  "university-of-illinois-urbana-champaign": 356,
+  "university-of-maryland-college-park": 120,
+  "rutgers-university-new-brunswick": 164,
+  "university-of-pittsburgh-pittsburgh-campus": 221,
+  "syracuse-university": 183,
+  "boston-college": 103,
+  "university-of-virginia-main-campus": 258,
+  "virginia-polytechnic-institute-and-state-university": 259,
+  "north-carolina-state-university-at-raleigh": 152,
+  "georgia-institute-of-technology-main-campus": 59,
+  "university-of-arkansas": 8,
+  "mississippi-state-university": 344,
+  "university-of-south-carolina-columbia": 2579,
+  "university-of-missouri-columbia": 142,
+  "university-of-california-berkeley": 25,
+  "arizona-state-university-tempe": 9,
+  "university-of-connecticut": 41,
+  "temple-university": 218,
+  "university-of-memphis": 235,
+  "university-of-houston": 248,
+  "university-of-louisville": 97,
+  "tulane-university-of-louisiana": 2655,
+  "university-of-central-florida": 2116,
 };
 
 /** Returns the ESPN NCAA team ID if known, otherwise undefined. */
@@ -184,6 +235,17 @@ export function featuredSchools(limit = 20): School[] {
     .slice(0, limit);
 
   return [...pinned, ...filler].slice(0, limit);
+}
+
+/** Extracts the bare hostname from a school's url field (for Clearbit logos). */
+export function getSchoolDomain(school: School): string | undefined {
+  if (!school.url) return undefined;
+  try {
+    const urlStr = school.url.startsWith("http") ? school.url : `https://${school.url}`;
+    return new URL(urlStr).hostname.replace(/^www\./, "");
+  } catch {
+    return undefined;
+  }
 }
 
 export function schoolsByState(): Record<string, School[]> {

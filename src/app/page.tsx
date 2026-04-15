@@ -11,13 +11,12 @@ const FEATURES = [
   { icon: "📦", title: "Ships from Amazon", body: "Every link goes straight to Amazon. Prime eligible. No markup. No middleman.", href: "/schools", cta: "Start Shopping →", bg: "#FF9900", fg: "#0a0a0f" },
 ];
 
-// Curated Unsplash photo IDs for the inspiration mosaic
+// Curated Unsplash photo IDs for the inspiration mosaic (all verified working)
 const DORM_PHOTOS = [
-  { id: "1555854994-b9b83ab6bfbd", label: "String Light Vibes", span: 2 },
-  { id: "1541339907098-a21f1d9f9f4b", label: "Study Setup", span: 1 },
-  { id: "1574629810360-7efbbe195018", label: "Cozy Corner", span: 1 },
+  { id: "1574629810360-7efbbe195018", label: "Cozy Corner", span: 2 },
   { id: "1598300042247-d088f8ab3a91", label: "Clean & Organized", span: 1 },
   { id: "1503676260728-1c00da094a0b", label: "Desk Goals", span: 1 },
+  { id: "1562774053-701939374585", label: "String Lights", span: 1 },
 ];
 
 export default function HomePage() {
@@ -33,7 +32,7 @@ export default function HomePage() {
         {/* Background photo */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="https://images.unsplash.com/photo-1555854994-b9b83ab6bfbd?auto=format&fit=crop&w=1920&q=85"
+          src="https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1920&q=85"
           alt="College dorm room setup"
           style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top" }}
           loading="eager"

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getSchool, nearbySchools, schools, getSchoolColors, schoolLogoBadge, getSchoolEspnId } from "@/lib/schools";
+import { getSchool, nearbySchools, schools, getSchoolColors, schoolLogoBadge, getSchoolEspnId, getSchoolDomain } from "@/lib/schools";
 import { SchoolLogo } from "@/components/SchoolLogo";
 import { ProductImage } from "@/components/ProductImage";
 import { PRODUCTS, CATEGORIES } from "@/lib/products";
@@ -46,6 +46,7 @@ export default async function SchoolPage({ params }: PageProps) {
   const nearby = nearbySchools(school, 8);
   const [pc, sc] = getSchoolColors(school);
   const espnId = getSchoolEspnId(school);
+  const domain = getSchoolDomain(school);
   const svgBadge = schoolLogoBadge(school, 120);
   const logoFallback = schoolLogoBadge(school, 80);
   const heroTextColor = "#fff"; // always white on colored hero with overlay
@@ -78,7 +79,7 @@ export default async function SchoolPage({ params }: PageProps) {
           filter: "blur(2px)",
           pointerEvents: "none",
         }}>
-          <SchoolLogo espnId={espnId} fallbackSvg={schoolLogoBadge(school, 400)} alt="" size={400} style={{ width: 400, height: 400 }} />
+          <SchoolLogo espnId={espnId} domain={domain} fallbackSvg={schoolLogoBadge(school, 400)} alt="" size={400} style={{ width: 400, height: 400 }} />
         </div>
 
         {/* Content */}
@@ -96,7 +97,7 @@ export default async function SchoolPage({ params }: PageProps) {
               boxShadow: "0 20px 60px rgba(0,0,0,0.4)",
               flexShrink: 0,
             }}>
-              <SchoolLogo espnId={espnId} fallbackSvg={svgBadge} alt={school.shortName} size={100} />
+              <SchoolLogo espnId={espnId} domain={domain} fallbackSvg={svgBadge} alt={school.shortName} size={100} />
             </div>
 
             <div>
@@ -252,7 +253,7 @@ export default async function SchoolPage({ params }: PageProps) {
         <div style={{ position: "relative", zIndex: 1, maxWidth: 1060, margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "2rem" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "1.25rem" }}>
             <div style={{ background: "rgba(255,255,255,0.95)", borderRadius: 16, padding: 10 }}>
-              <SchoolLogo espnId={espnId} fallbackSvg={schoolLogoBadge(school, 56)} alt={school.shortName} size={56} />
+              <SchoolLogo espnId={espnId} domain={domain} fallbackSvg={schoolLogoBadge(school, 56)} alt={school.shortName} size={56} />
             </div>
             <div>
               <p style={{ fontWeight: 900, fontSize: 22, color: "#fff", margin: 0, lineHeight: 1.1 }}>{school.shortName} Dorm Essentials</p>
@@ -303,7 +304,7 @@ export default async function SchoolPage({ params }: PageProps) {
                   >
                     <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.28)", borderRadius: "inherit" }} />
                     <div style={{ position: "absolute", top: 10, right: 10, background: "rgba(255,255,255,0.95)", borderRadius: 9, padding: 4 }}>
-                      <SchoolLogo espnId={getSchoolEspnId(s)} fallbackSvg={schoolLogoBadge(s, 32)} alt={s.shortName} size={32} />
+                      <SchoolLogo espnId={getSchoolEspnId(s)} domain={getSchoolDomain(s)} fallbackSvg={schoolLogoBadge(s, 32)} alt={s.shortName} size={32} />
                     </div>
                     <div style={{ position: "relative", zIndex: 1 }}>
                       <p style={{ color: "#fff", fontWeight: 900, fontSize: 13, margin: 0, lineHeight: 1.2 }}>{s.shortName}</p>
