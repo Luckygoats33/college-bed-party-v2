@@ -156,8 +156,33 @@ export default async function SchoolPage({ params }: PageProps) {
       {/* ══ SCHOOL COLOR ACCENT BAR ═══════════════════════════ */}
       <div style={{ height: 6, background: `linear-gradient(90deg, ${pc}, ${sc}, ${pc})` }} />
 
+      {/* ══ SCHOOL INTRO ═════════════════════════════════════ */}
+      <div style={{ maxWidth: 1060, margin: "0 auto", padding: "2.5rem 1.25rem 0" }}>
+        <div style={{ background: `${pc}12`, border: `1px solid ${pc}30`, borderRadius: 16, padding: "1.25rem 1.5rem", display: "flex", alignItems: "center", gap: "1rem", flexWrap: "wrap" }}>
+          <div style={{ background: "rgba(255,255,255,0.9)", borderRadius: 10, padding: 6 }}>
+            <SchoolLogo espnId={espnId} domain={domain} fallbackSvg={schoolLogoBadge(school, 40)} alt={school.shortName} size={40} />
+          </div>
+          <div>
+            <p style={{ fontWeight: 900, fontSize: 15, margin: 0, color: "var(--ink)" }}>
+              Curated for {school.name} Students
+            </p>
+            <p style={{ fontSize: 13, color: "var(--muted)", margin: "0.125rem 0 0" }}>
+              {mustHaveCount} must-haves · all sized Twin XL · ships from Amazon with your {school.shortName} pride
+            </p>
+          </div>
+          <a
+            href={amazonSearch(`${school.shortName} dorm room essentials`)}
+            target="_blank"
+            rel="noopener noreferrer sponsored"
+            style={{ marginLeft: "auto", flexShrink: 0, background: pc, color: isLight(pc) ? "#0a0a0f" : "#fff", fontWeight: 800, fontSize: 13, padding: "0.5rem 1.25rem", borderRadius: 999, textDecoration: "none" }}
+          >
+            Shop All on Amazon →
+          </a>
+        </div>
+      </div>
+
       {/* ══ PRODUCTS ══════════════════════════════════════════ */}
-      <div style={{ maxWidth: 1060, margin: "0 auto", padding: "3rem 1.25rem" }}>
+      <div style={{ maxWidth: 1060, margin: "0 auto", padding: "2rem 1.25rem" }}>
         {CATEGORIES.map(cat => {
           const catProducts = PRODUCTS.filter(p => p.category === cat.id);
           if (!catProducts.length) return null;
@@ -197,7 +222,7 @@ export default async function SchoolPage({ params }: PageProps) {
                 {catProducts.map(product => (
                   <a
                     key={product.id}
-                    href={amazonSearch(product.searchQuery)}
+                    href={amazonSearch(`${school.shortName} ${product.searchQuery}`)}
                     target="_blank"
                     rel="noopener noreferrer sponsored"
                     className="card"
@@ -209,8 +234,8 @@ export default async function SchoolPage({ params }: PageProps) {
                       border: "1.5px solid rgba(0,0,0,0.07)",
                     }}
                   >
-                    {/* Top school-color strip */}
-                    <div style={{ height: 5, background: `linear-gradient(90deg, ${pc}, ${sc})` }} />
+                    {/* Top school-color strip — hard 2-tone split */}
+                    <div style={{ height: 5, background: `linear-gradient(90deg, ${pc} 50%, ${sc} 50%)` }} />
 
                     {/* Product image */}
                     <div style={{ aspectRatio: "1", background: "#fafafa", display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden" }}>
