@@ -5,7 +5,7 @@ import "./globals.css";
 const geist = Geist({ subsets: ["latin"], variable: "--font-geist-sans" });
 
 export const metadata: Metadata = {
-  title: { default: "College Bed Party Essentials", template: "%s | College Bed Party" },
+  title: { default: "College Bed Party Guide", template: "%s | College Bed Party Guide" },
   description: "Shop dorm room essentials curated for your school's colors. Find your college and build the perfect dorm — ships from Amazon.",
   metadataBase: new URL("https://collegebedpartyessentials.com"),
 };
@@ -23,112 +23,156 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 }
 
 function Nav() {
+  const navLinks = [
+    { label: "Colleges", href: "/schools" },
+    { label: "Blog",     href: "/blog" },
+    { label: "Guides",   href: "/guides" },
+    { label: "Gallery",  href: "/gallery" },
+  ];
+
   return (
     <header style={{
       position: "sticky", top: 0, zIndex: 50,
-      background: "rgba(254,252,248,0.85)", backdropFilter: "blur(20px)",
+      background: "rgba(254,252,248,0.92)", backdropFilter: "blur(20px)",
       borderBottom: "1px solid rgba(0,0,0,0.07)",
     }}>
       <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 1.25rem", height: 64, display: "flex", alignItems: "center", justifyContent: "space-between", gap: "1rem" }}>
+
         {/* Logo */}
         <a href="/" style={{ display: "flex", alignItems: "center", gap: "0.625rem", textDecoration: "none" }}>
-          <span style={{
-            width: 34, height: 34, borderRadius: 10, display: "flex", alignItems: "center", justifyContent: "center",
-            background: "#ff3d6e", fontSize: 16,
-          }}>🛏️</span>
-          <div style={{ lineHeight: 1.1 }}>
-            <div style={{ fontSize: 10, fontWeight: 800, color: "var(--accent)", letterSpacing: "0.12em", textTransform: "uppercase" }}>College</div>
-            <div style={{ fontSize: 14, fontWeight: 900, color: "var(--ink)", letterSpacing: "-0.02em" }}>Bed Party</div>
+          <span style={{ width: 34, height: 34, borderRadius: 10, display: "flex", alignItems: "center", justifyContent: "center", background: "#ff3d6e", fontSize: 16, flexShrink: 0 }}>🛏️</span>
+          <div style={{ lineHeight: 1.15 }}>
+            <div style={{ fontSize: 11, fontWeight: 900, color: "var(--ink)", letterSpacing: "-0.01em" }}>College Bed Party</div>
+            <div style={{ fontSize: 10, fontWeight: 600, color: "var(--muted)", letterSpacing: "0.04em" }}>Guide</div>
           </div>
         </a>
 
-        {/* Desktop nav */}
-        <nav style={{ display: "flex", alignItems: "center", gap: "0.25rem" }}>
-          <a href="/schools" style={{ padding: "0.5rem 0.875rem", borderRadius: 10, fontSize: 14, fontWeight: 600, color: "var(--muted)", textDecoration: "none" }}>
-            Colleges
-          </a>
-          <a href="/blog" style={{ padding: "0.5rem 0.875rem", borderRadius: 10, fontSize: 14, fontWeight: 600, color: "var(--muted)", textDecoration: "none" }}>
-            Blog
-          </a>
-          <a href="/guides" style={{ padding: "0.5rem 0.875rem", borderRadius: 10, fontSize: 14, fontWeight: 600, color: "var(--muted)", textDecoration: "none" }}>
-            Guides
-          </a>
-          <a href="/gallery" style={{ padding: "0.5rem 0.875rem", borderRadius: 10, fontSize: 14, fontWeight: 600, color: "var(--muted)", textDecoration: "none" }}>
-            Gallery
-          </a>
-          <a href="/schools" className="btn btn-dark" style={{ padding: "0.55rem 1.25rem", fontSize: 14 }}>
+        {/* Nav links */}
+        <nav style={{ display: "flex", alignItems: "center", gap: "0.125rem" }}>
+          {navLinks.map(({ label, href }) => (
+            <a key={href} href={href} style={{ padding: "0.5rem 0.875rem", borderRadius: 10, fontSize: 14, fontWeight: 600, color: "var(--muted)", textDecoration: "none" }}>
+              {label}
+            </a>
+          ))}
+          <a href="/schools" className="btn btn-dark" style={{ marginLeft: "0.375rem", padding: "0.55rem 1.25rem", fontSize: 14 }}>
             Find My School →
           </a>
         </nav>
+
       </div>
     </header>
+  );
+}
+
+function FooterLink({ href, children, external }: { href: string; children: React.ReactNode; external?: boolean }) {
+  return (
+    <div style={{ marginBottom: "0.55rem" }}>
+      <a
+        href={href}
+        {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+        style={{ color: "rgba(254,252,248,0.55)", textDecoration: "none", fontSize: 13, lineHeight: 1.5 }}
+      >
+        {children}
+      </a>
+    </div>
+  );
+}
+
+function FooterHeading({ children }: { children: React.ReactNode }) {
+  return (
+    <p style={{ color: "var(--cream)", fontWeight: 700, fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "1rem", marginTop: 0 }}>
+      {children}
+    </p>
   );
 }
 
 function Footer() {
   return (
     <footer style={{ background: "var(--ink)", color: "rgba(254,252,248,0.55)", fontSize: 13, marginTop: "auto" }}>
-      {/* CTA row */}
+
+      {/* CTA band */}
       <div style={{ borderBottom: "1px solid rgba(255,255,255,0.07)" }}>
         <div style={{ maxWidth: 1280, margin: "0 auto", padding: "3rem 1.25rem", display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: "1.5rem" }}>
           <div>
-            <p style={{ color: "var(--cream)", fontWeight: 900, fontSize: 22, margin: 0 }}>Ready to dorm right?</p>
-            <p style={{ marginTop: "0.25rem" }}>Find your school and shop in seconds.</p>
+            <p style={{ color: "var(--cream)", fontWeight: 900, fontSize: 22, margin: "0 0 0.25rem" }}>Ready to dorm right?</p>
+            <p style={{ margin: 0 }}>Find your college and shop in seconds.</p>
           </div>
           <a href="/schools" className="btn btn-pink" style={{ flexShrink: 0 }}>Find My School →</a>
         </div>
       </div>
 
-      {/* Links */}
-      <div style={{ maxWidth: 1280, margin: "0 auto", padding: "2.5rem 1.25rem", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))", gap: "2rem" }}>
+      {/* Link columns */}
+      <div style={{ maxWidth: 1280, margin: "0 auto", padding: "2.5rem 1.25rem 2rem", display: "grid", gridTemplateColumns: "2fr 1fr 1fr 1fr 1fr", gap: "2rem" }}>
+
+        {/* Brand */}
         <div>
-          <p style={{ color: "var(--cream)", fontWeight: 900, marginBottom: "0.5rem" }}>🛏️ College Bed Party</p>
-          <p style={{ fontSize: 12, lineHeight: 1.6 }}>Dorm essentials by school color. Plan. Shop. Personalize.</p>
+          <a href="/" style={{ display: "flex", alignItems: "center", gap: "0.5rem", textDecoration: "none", marginBottom: "0.75rem" }}>
+            <span style={{ width: 30, height: 30, borderRadius: 8, background: "#ff3d6e", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 14, flexShrink: 0 }}>🛏️</span>
+            <span style={{ color: "var(--cream)", fontWeight: 900, fontSize: 13 }}>College Bed Party Guide</span>
+          </a>
+          <p style={{ fontSize: 12, lineHeight: 1.7, maxWidth: 240, margin: 0 }}>
+            Dorm essentials curated by school color. Find your college, shop Amazon, personalize your space.
+          </p>
+          {/* Social icons */}
+          <div style={{ display: "flex", gap: "0.625rem", marginTop: "1.25rem" }}>
+            {[
+              { label: "Instagram", href: "https://instagram.com", icon: "📸" },
+              { label: "TikTok",    href: "https://tiktok.com",    icon: "🎵" },
+              { label: "Pinterest", href: "https://pinterest.com", icon: "📌" },
+            ].map(s => (
+              <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" title={s.label}
+                style={{ width: 36, height: 36, borderRadius: 10, background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.1)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 16, textDecoration: "none" }}>
+                {s.icon}
+              </a>
+            ))}
+          </div>
         </div>
+
+        {/* Navigation */}
         <div>
-          <p style={{ color: "var(--cream)", fontWeight: 700, fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "1rem" }}>Explore</p>
-          {[["All Schools", "/schools"], ["Guides", "/guides"], ["Gallery", "/gallery"]].map(([l, h]) => (
-            <div key={l} style={{ marginBottom: "0.6rem" }}><a href={h} style={{ color: "rgba(254,252,248,0.55)", textDecoration: "none" }}>{l}</a></div>
-          ))}
+          <FooterHeading>Navigation</FooterHeading>
+          <FooterLink href="/">Home</FooterLink>
+          <FooterLink href="/schools">Colleges</FooterLink>
+          <FooterLink href="/guides">Guides</FooterLink>
+          <FooterLink href="/blog">Blog</FooterLink>
+          <FooterLink href="/gallery">Gallery</FooterLink>
         </div>
+
+        {/* Popular Schools */}
         <div>
-          <p style={{ color: "var(--cream)", fontWeight: 700, fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "1rem" }}>Regions</p>
-          {[
-            ["New England", "/schools?region=New+England"],
-            ["Mid East", "/schools?region=Mid+East"],
-            ["Southeast", "/schools?region=Southeast"],
-            ["Great Lakes", "/schools?region=Great+Lakes"],
-            ["Plains", "/schools?region=Plains"],
-            ["Southwest", "/schools?region=Southwest"],
-            ["Rocky Mountains", "/schools?region=Rocky+Mountains"],
-            ["Far West", "/schools?region=Far+West"],
-            ["Outlying Areas", "/schools?region=Outlying+Areas"],
-          ].map(([l, h]) => (
-            <div key={l} style={{ marginBottom: "0.5rem" }}><a href={h} style={{ color: "rgba(254,252,248,0.55)", textDecoration: "none", fontSize: 12 }}>{l}</a></div>
-          ))}
+          <FooterHeading>Popular Schools</FooterHeading>
+          <FooterLink href="/schools/pennsylvania-state-university-main-campus">Penn State</FooterLink>
+          <FooterLink href="/schools/boston-university">Boston University</FooterLink>
+          <FooterLink href="/schools/university-of-georgia">Georgia</FooterLink>
+          <FooterLink href="/schools/the-university-of-alabama">Alabama</FooterLink>
+          <FooterLink href="/schools/ohio-state-university-main-campus">Ohio State</FooterLink>
+          <FooterLink href="/schools/university-of-michigan-ann-arbor">Michigan</FooterLink>
         </div>
+
+        {/* Resources */}
         <div>
-          <p style={{ color: "var(--cream)", fontWeight: 700, fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "1rem" }}>Connect</p>
-          {[
-            ["📸 Instagram", "https://www.instagram.com/collegebedparty"],
-            ["🎵 TikTok", "https://www.tiktok.com/@collegebedparty"],
-            ["📌 Pinterest", "https://www.pinterest.com/collegebedparty"],
-          ].map(([l, h]) => (
-            <div key={l} style={{ marginBottom: "0.6rem" }}><a href={h} target="_blank" rel="noopener noreferrer" style={{ color: "rgba(254,252,248,0.55)", textDecoration: "none", fontSize: 12 }}>{l}</a></div>
-          ))}
+          <FooterHeading>Resources</FooterHeading>
+          <FooterLink href="/guides">How-To Guides</FooterLink>
+          <FooterLink href="/affiliate-disclosure">Affiliate Disclosure</FooterLink>
+          <FooterLink href="/contact">Contact</FooterLink>
         </div>
+
+        {/* Legal */}
         <div>
-          <p style={{ color: "var(--cream)", fontWeight: 700, fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "1rem" }}>Legal</p>
-          {[["Privacy Policy", "/privacy"], ["Terms of Use", "/terms"], ["ADA Accessibility", "/ada"], ["Affiliate Disclosure", "/affiliate-disclosure"], ["Contact", "/contact"]].map(([l, h]) => (
-            <div key={l} style={{ marginBottom: "0.5rem" }}><a href={h} style={{ color: "rgba(254,252,248,0.55)", textDecoration: "none", fontSize: 12 }}>{l}</a></div>
-          ))}
+          <FooterHeading>Legal</FooterHeading>
+          <FooterLink href="/terms">Terms</FooterLink>
+          <FooterLink href="/privacy">Privacy</FooterLink>
+          <FooterLink href="/ada">ADA</FooterLink>
         </div>
+
       </div>
 
+      {/* Bottom bar */}
       <div style={{ borderTop: "1px solid rgba(255,255,255,0.06)", maxWidth: 1280, margin: "0 auto", padding: "1.25rem", display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: "0.5rem", fontSize: 11, color: "rgba(254,252,248,0.28)" }}>
-        <span>© {new Date().getFullYear()} College Bed Party Essentials.</span>
-        <span>Amazon Associate — we earn from qualifying purchases.</span>
+        <span>© {new Date().getFullYear()} College Bed Party Guide. All rights reserved.</span>
+        <span>Amazon Associate — we earn from qualifying purchases. <a href="/affiliate-disclosure" style={{ color: "rgba(254,252,248,0.35)", textDecoration: "none" }}>Learn more</a></span>
       </div>
+
     </footer>
   );
 }
