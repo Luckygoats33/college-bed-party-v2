@@ -296,6 +296,45 @@ export default async function SchoolPage({ params }: PageProps) {
         </div>
       </section>
 
+      {/* ══ GUIDES & GALLERY ══════════════════════════════════ */}
+      <section style={{ maxWidth: 1060, margin: "0 auto", padding: "4rem 1.25rem" }}>
+        <p style={{ fontSize: 11, fontWeight: 800, color: "var(--accent)", letterSpacing: "0.12em", textTransform: "uppercase", margin: "0 0 0.5rem" }}>Resources</p>
+        <h2 style={{ fontWeight: 900, fontSize: 22, margin: "0 0 1.5rem" }}>Guides & Inspiration</h2>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))", gap: 12 }}>
+          {/* Blog / Guides card */}
+          <a href="/guides" style={{ borderRadius: 18, background: "var(--ink)", padding: "2rem 1.75rem", display: "flex", flexDirection: "column", gap: "0.75rem", textDecoration: "none" }}>
+            <span style={{ fontSize: 36 }}>📋</span>
+            <p style={{ fontWeight: 900, fontSize: 18, color: "var(--cream)", margin: 0, lineHeight: 1.2 }}>Dorm Room Guides</p>
+            <p style={{ fontSize: 13, color: "rgba(254,252,248,0.55)", margin: 0, lineHeight: 1.6 }}>
+              Step-by-step how-tos for bedding, storage, lighting, and more — before move-in day.
+            </p>
+            <span style={{ fontSize: 13, fontWeight: 800, color: "var(--accent)", marginTop: "auto" }}>Read the Guides →</span>
+          </a>
+          {/* Gallery card */}
+          <a href="/gallery" style={{ borderRadius: 18, background: pc, padding: "2rem 1.75rem", display: "flex", flexDirection: "column", gap: "0.75rem", textDecoration: "none", position: "relative", overflow: "hidden" }}>
+            <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.25)" }} />
+            <div style={{ position: "relative", zIndex: 1, display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+              <span style={{ fontSize: 36 }}>🎨</span>
+              <p style={{ fontWeight: 900, fontSize: 18, color: "#fff", margin: 0, lineHeight: 1.2 }}>Dorm Inspiration Gallery</p>
+              <p style={{ fontSize: 13, color: "rgba(255,255,255,0.7)", margin: 0, lineHeight: 1.6 }}>
+                See how other {school.shortName} students styled their rooms in {school.shortName} colors.
+              </p>
+              <span style={{ fontSize: 13, fontWeight: 800, color: "#fff", marginTop: "auto" }}>See the Gallery →</span>
+            </div>
+          </a>
+          {/* Amazon search card */}
+          <a href={amazonSearch(`${school.shortName} dorm decor college`)} target="_blank" rel="noopener noreferrer sponsored"
+            style={{ borderRadius: 18, background: "#FF9900", padding: "2rem 1.75rem", display: "flex", flexDirection: "column", gap: "0.75rem", textDecoration: "none" }}>
+            <span style={{ fontSize: 36 }}>📦</span>
+            <p style={{ fontWeight: 900, fontSize: 18, color: "#0F1111", margin: 0, lineHeight: 1.2 }}>Shop on Amazon</p>
+            <p style={{ fontSize: 13, color: "rgba(0,0,0,0.6)", margin: 0, lineHeight: 1.6 }}>
+              Browse all {school.shortName} dorm picks — Prime eligible, easy returns, Amazon&apos;s price.
+            </p>
+            <span style={{ fontSize: 13, fontWeight: 800, color: "#0F1111", marginTop: "auto" }}>Shop Now →</span>
+          </a>
+        </div>
+      </section>
+
       {/* ══ NEARBY SCHOOLS ════════════════════════════════════ */}
       {nearby.length > 0 && (
         <section style={{ background: "var(--cream2)", padding: "4rem 1.25rem" }}>

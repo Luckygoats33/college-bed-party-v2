@@ -102,10 +102,19 @@ function Footer() {
           ))}
         </div>
         <div>
-          <p style={{ color: "var(--cream)", fontWeight: 700, fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "1rem" }}>Legal</p>
-          {[["Privacy", "/privacy"], ["Terms", "/terms"]].map(([l, h]) => (
-            <div key={l} style={{ marginBottom: "0.6rem" }}><a href={h} style={{ color: "rgba(254,252,248,0.55)", textDecoration: "none" }}>{l}</a></div>
+          <p style={{ color: "var(--cream)", fontWeight: 700, fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "1rem" }}>Follow Us</p>
+          {[
+            ["📸 Instagram", "https://www.instagram.com/collegebedparty"],
+            ["🎵 TikTok", "https://www.tiktok.com/@collegebedparty"],
+            ["🐦 Twitter / X", "https://x.com/collegebedparty"],
+          ].map(([l, h]) => (
+            <div key={l} style={{ marginBottom: "0.6rem" }}><a href={h} target="_blank" rel="noopener noreferrer" style={{ color: "rgba(254,252,248,0.55)", textDecoration: "none", fontSize: 12 }}>{l}</a></div>
           ))}
+          <div style={{ marginTop: "1rem", paddingTop: "1rem", borderTop: "1px solid rgba(255,255,255,0.07)" }}>
+            {[["Privacy", "/privacy"], ["Terms", "/terms"]].map(([l, h]) => (
+              <div key={l} style={{ marginBottom: "0.5rem" }}><a href={h} style={{ color: "rgba(254,252,248,0.55)", textDecoration: "none", fontSize: 12 }}>{l}</a></div>
+            ))}
+          </div>
         </div>
       </div>
 
