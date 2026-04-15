@@ -39,7 +39,7 @@ export default function HomePage() {
         {/* Background photo */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1920&q=85"
+          src="/hero-dorm.png"
           alt="College dorm room setup"
           style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top" }}
           loading="eager"
