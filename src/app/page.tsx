@@ -208,39 +208,34 @@ export default function HomePage() {
           </a>
         </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gridAutoRows: 160, gap: 12 }}>
-          {featured.map((school, i) => {
-            const tall = i < 2;
+        <div className="top-schools-grid" style={{ display: "grid", gridTemplateColumns: "repeat(6, 1fr)", gap: 12 }}>
+          {featured.map((school) => {
             const [pc, sc] = getSchoolColors(school);
             const espnId = getSchoolEspnId(school);
             const domain = getSchoolDomain(school);
-            const logoSize = tall ? 56 : 38;
             return (
               <a
                 key={school.slug}
                 href={`/schools/${school.slug}`}
                 className="card"
                 style={{
-                  gridRow: tall ? "span 2" : "span 1",
                   background: `linear-gradient(135deg, ${pc} 50%, ${sc} 50%)`,
                   display: "flex", flexDirection: "column", justifyContent: "space-between",
-                  padding: tall ? "1.5rem" : "1rem",
+                  padding: "1rem",
                   textDecoration: "none", position: "relative",
-                  minHeight: tall ? 332 : 160,
+                  aspectRatio: "1",
                 }}
               >
                 <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.25)", borderRadius: "inherit" }} />
-                {/* Logo top-right */}
                 <div style={{ position: "relative", zIndex: 1, display: "flex", justifyContent: "flex-end" }}>
-                  <div style={{ background: "rgba(255,255,255,0.95)", borderRadius: tall ? 14 : 10, padding: tall ? 6 : 4 }}>
-                    <SchoolLogo espnId={espnId} domain={domain} fallbackSvg={schoolLogoBadge(school, logoSize)} alt={school.shortName} size={logoSize} />
+                  <div style={{ background: "rgba(255,255,255,0.95)", borderRadius: 10, padding: 4 }}>
+                    <SchoolLogo espnId={espnId} domain={domain} fallbackSvg={schoolLogoBadge(school, 38)} alt={school.shortName} size={38} />
                   </div>
                 </div>
-                {/* Name bottom-left */}
                 <div style={{ position: "relative", zIndex: 1 }}>
-                  {school.nickname && <p style={{ color: "rgba(255,255,255,0.65)", fontSize: tall ? 12 : 10, fontWeight: 700, margin: "0 0 0.2rem" }}>{school.nickname}</p>}
-                  <p style={{ color: "#fff", fontWeight: 900, fontSize: tall ? 20 : 13, margin: 0, lineHeight: 1.1 }}>{school.shortName}</p>
-                  <p style={{ color: "rgba(255,255,255,0.5)", fontSize: tall ? 12 : 10, margin: "0.2rem 0 0" }}>{school.city}, {school.state}</p>
+                  {school.nickname && <p style={{ color: "rgba(255,255,255,0.65)", fontSize: 10, fontWeight: 700, margin: "0 0 0.2rem" }}>{school.nickname}</p>}
+                  <p style={{ color: "#fff", fontWeight: 900, fontSize: 13, margin: 0, lineHeight: 1.1 }}>{school.shortName}</p>
+                  <p style={{ color: "rgba(255,255,255,0.5)", fontSize: 10, margin: "0.2rem 0 0" }}>{school.city}, {school.state}</p>
                 </div>
               </a>
             );

@@ -435,3 +435,11 @@ body {
   .hero-photo { max-width: 280px !important; }
 }
 
+/* Top schools grid responsive */
+@media (max-width: 960px) {
+  .top-schools-grid { grid-template-columns: repeat(3, 1fr) !important; }
+}
+@media (max-width: 480px) {
+  .top-schools-grid { grid-template-columns: repeat(3, 1fr) !important; gap: 8px !important; }
+}
+
