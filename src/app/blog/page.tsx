@@ -1,105 +1,78 @@
 import type { Metadata } from "next";
+import posts from "@/data/blog-posts.json";
+import { schools, getSchoolColors } from "@/lib/schools";
 
 export const metadata: Metadata = {
-  title: "Blog — College Dorm Tips & Guides",
-  description: "Dorm room tips, college packing lists, and school color inspiration for every college student.",
+  title: "Blog — College Bed Party Guides",
+  description: "School-by-school bed party guides. Real decoration ideas, packing tips, and dorm inspiration for every major college.",
 };
 
-const POSTS = [
-  {
-    slug: "ultimate-dorm-packing-list",
-    emoji: "📋",
-    title: "The Ultimate College Dorm Packing List (2024)",
-    excerpt: "Everything you actually need for your first dorm — and what to leave at home. Organized by category.",
-    date: "Aug 2024",
-    tag: "Packing",
-    color: "#ff3d6e",
-  },
-  {
-    slug: "dorm-room-color-themes",
-    emoji: "🎨",
-    title: "Dorm Room Color Themes by School",
-    excerpt: "How to build a dorm room around your school's official colors — from Alabama Crimson to Michigan Maize.",
-    date: "Jul 2024",
-    tag: "Decor",
-    color: "#7c3aed",
-  },
-  {
-    slug: "twin-xl-bedding-guide",
-    emoji: "🛏️",
-    title: "Twin XL Bedding: Everything You Need to Know",
-    excerpt: "Why dorm beds are different, what size sheets to buy, and the best mattress toppers under $60.",
-    date: "Jul 2024",
-    tag: "Bedding",
-    color: "#ff3d6e",
-  },
-  {
-    slug: "dorm-storage-hacks",
-    emoji: "📦",
-    title: "15 Dorm Storage Hacks That Actually Work",
-    excerpt: "Under-bed bins, over-door organizers, command hooks — how to fit your whole life into 120 sq ft.",
-    date: "Jun 2024",
-    tag: "Storage",
-    color: "#7c3aed",
-  },
-  {
-    slug: "string-lights-dorm",
-    emoji: "✨",
-    title: "The Best String Lights for Dorm Rooms (Ranked)",
-    excerpt: "We tested 8 sets. These are the ones that don't die after a month and look good in photos.",
-    date: "Jun 2024",
-    tag: "Decor",
-    color: "#f59e0b",
-  },
-  {
-    slug: "mini-fridge-guide",
-    emoji: "🧊",
-    title: "Best Mini Fridges for Dorms — 2024 Guide",
-    excerpt: "Compact, quiet, and actually cold. The best mini fridges for dorm rooms at every budget.",
-    date: "May 2024",
-    tag: "Tech",
-    color: "#06b6d4",
-  },
-];
+type Post = { slug: string; schoolSlug: string; title: string; excerpt: string; date: string; heroImage: string; bodyHtml: string };
 
 export default function BlogPage() {
+  const schoolBySlug = Object.fromEntries(schools.map(s => [s.slug, s]));
+  const list = posts as Post[];
+
   return (
     <div style={{ color: "var(--ink)" }}>
       {/* Header */}
-      <div style={{ background: "var(--ink)", color: "var(--cream)", padding: "3.5rem 1.25rem 4rem", position: "relative", overflow: "hidden" }}>
-        <div style={{ position: "absolute", top: "-20%", right: "10%", width: 500, height: 500, borderRadius: "50%", background: "var(--accent)", opacity: 0.1, filter: "blur(100px)", pointerEvents: "none" }} />
+      <div style={{
+        background: "linear-gradient(180deg, #fff 0%, #fff5f8 60%, #ffeaf1 100%)",
+        color: "var(--ink)",
+        padding: "3.5rem 1.25rem 3.5rem",
+        position: "relative",
+        overflow: "hidden",
+        borderBottom: "1px solid rgba(0,0,0,0.05)",
+      }}>
+        <div style={{ position: "absolute", inset: 0, pointerEvents: "none" }}>
+          <div style={{ position: "absolute", top: "-25%", right: "-8%", width: 420, height: 420, borderRadius: "50%", background: "#ff3d6e", opacity: 0.10, filter: "blur(90px)" }} />
+          <div style={{ position: "absolute", bottom: "-25%", left: "15%", width: 340, height: 340, borderRadius: "50%", background: "#ffb3c8", opacity: 0.18, filter: "blur(70px)" }} />
+        </div>
         <div style={{ position: "relative", zIndex: 1, maxWidth: 1280, margin: "0 auto" }}>
-          <p style={{ fontSize: 11, fontWeight: 800, color: "var(--accent)", letterSpacing: "0.14em", textTransform: "uppercase", margin: "0 0 0.5rem" }}>Blog</p>
-          <h1 className="d-lg" style={{ color: "var(--cream)", margin: "0 0 0.75rem" }}>Dorm Tips & Guides</h1>
-          <p style={{ color: "rgba(254,252,248,0.55)", fontSize: 15, margin: 0, maxWidth: 480 }}>
-            Packing lists, color themes, storage hacks — everything you need before move-in day.
+          <p style={{ fontSize: 11, fontWeight: 800, color: "#ff3d6e", letterSpacing: "0.14em", textTransform: "uppercase", margin: "0 0 0.5rem" }}>Blog</p>
+          <h1 className="d-lg" style={{ color: "var(--ink)", margin: "0 0 0.5rem" }}>Bed Party Guides</h1>
+          <p style={{ color: "rgba(10,10,15,0.55)", fontSize: 15, margin: 0, maxWidth: 560 }}>
+            {list.length} school-by-school guides — decor ideas, color palettes, and dorm essentials matched to your team.
           </p>
         </div>
       </div>
 
       {/* Posts grid */}
       <div style={{ maxWidth: 1280, margin: "0 auto", padding: "3rem 1.25rem 6rem" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))", gap: 16 }}>
-          {POSTS.map(post => (
-            <a
-              key={post.slug}
-              href={`/blog/${post.slug}`}
-              style={{ borderRadius: 20, overflow: "hidden", background: "var(--cream2)", display: "flex", flexDirection: "column", textDecoration: "none", color: "inherit" }}
-            >
-              {/* Color header */}
-              <div style={{ height: 120, background: post.color, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 52, position: "relative" }}>
-                <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.1)" }} />
-                <span style={{ position: "relative" }}>{post.emoji}</span>
-                <span style={{ position: "absolute", top: 12, right: 12, background: "rgba(0,0,0,0.35)", borderRadius: 999, padding: "0.2rem 0.7rem", fontSize: 10, fontWeight: 700, color: "#fff", letterSpacing: "0.06em", textTransform: "uppercase" }}>{post.tag}</span>
-              </div>
-              <div style={{ padding: "1.25rem", flex: 1, display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-                <p style={{ fontSize: 10, color: "var(--muted)", fontWeight: 600, margin: 0 }}>{post.date}</p>
-                <p style={{ fontWeight: 900, fontSize: 16, lineHeight: 1.3, margin: 0, color: "var(--ink)" }}>{post.title}</p>
-                <p style={{ fontSize: 13, color: "var(--muted)", lineHeight: 1.6, margin: 0, flex: 1 }}>{post.excerpt}</p>
-                <span style={{ fontSize: 13, fontWeight: 800, color: post.color, marginTop: "0.5rem" }}>Read More →</span>
-              </div>
-            </a>
-          ))}
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: 18 }}>
+          {list.map(post => {
+            const school = schoolBySlug[post.schoolSlug];
+            const [spc, ssc] = school ? getSchoolColors(school) : ["#ff3d6e", "#7c3aed"];
+            return (
+              <a
+                key={post.slug}
+                href={`/blog/${post.slug}`}
+                className="card"
+                style={{
+                  borderRadius: 20,
+                  overflow: "hidden",
+                  background: "#fff",
+                  display: "flex",
+                  flexDirection: "column",
+                  textDecoration: "none",
+                  color: "var(--ink)",
+                  border: "1px solid rgba(0,0,0,0.06)",
+                }}
+              >
+                <div style={{ position: "relative", aspectRatio: "16 / 10", overflow: "hidden", background: "var(--cream2)" }}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={post.heroImage} alt={post.title} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+                  <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 4, background: `linear-gradient(90deg, ${spc} 50%, ${ssc} 50%)` }} />
+                </div>
+                <div style={{ padding: "1.1rem 1.15rem 1.25rem", flex: 1, display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+                  <p style={{ fontSize: 10.5, color: "var(--muted)", fontWeight: 700, margin: 0, letterSpacing: "0.06em", textTransform: "uppercase" }}>{post.date}</p>
+                  <p style={{ fontWeight: 900, fontSize: 17, lineHeight: 1.25, margin: 0 }}>{post.title}</p>
+                  <p style={{ fontSize: 13, color: "var(--muted)", lineHeight: 1.6, margin: 0, flex: 1 }}>{post.excerpt}</p>
+                  <span style={{ fontSize: 13, fontWeight: 800, color: "#ff3d6e", marginTop: "0.25rem" }}>Read Guide →</span>
+                </div>
+              </a>
+            );
+          })}
         </div>
       </div>
     </div>

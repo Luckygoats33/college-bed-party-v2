@@ -13,18 +13,18 @@ interface Props {
 /**
  * Cascades through logo sources until one loads:
  *   1. ESPN NCAA CDN  (22 major schools with known IDs)
- *   2. Clearbit logo  (pulls from school's own website domain)
- *   3. SVG badge      (initials on school color — always works)
+ *   2. SVG badge      (initials on school color — always works)
+ * Clearbit was removed (API discontinued Dec 2024).
  */
-export function SchoolLogo({ espnId, domain, fallbackSvg, alt, size, style }: Props) {
+export function SchoolLogo({ espnId, domain: _domain, fallbackSvg, alt, size, style }: Props) {
   const sources = [
     espnId ? `https://a.espncdn.com/i/teamlogos/ncaa/500/${espnId}.png` : null,
-    domain  ? `https://logo.clearbit.com/${domain}` : null,
     fallbackSvg,
   ].filter(Boolean) as string[];
 
   const [idx, setIdx] = useState(0);
 
+  const isLast = idx >= sources.length - 1;
   return (
     // eslint-disable-next-line @next/next/no-img-element
     <img
@@ -32,7 +32,13 @@ export function SchoolLogo({ espnId, domain, fallbackSvg, alt, size, style }: Pr
       alt={alt}
       width={size}
       height={size}
-      onError={() => setIdx(i => i + 1)}
+      onError={() => { if (!isLast) setIdx(i => i + 1); }}
+      onLoad={(e) => {
+        if (isLast) return;
+        const img = e.currentTarget;
+        // Clearbit/ESPN sometimes return 200 with a tiny/empty image — treat as failure
+        if (img.naturalWidth < 8 || img.naturalHeight < 8) setIdx(i => i + 1);
+      }}
       style={{ width: size, height: size, objectFit: "contain", ...style }}
     />
   );

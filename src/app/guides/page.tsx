@@ -57,13 +57,32 @@ const GUIDES = [
 export default function GuidesPage() {
   return (
     <div style={{ color: "var(--ink)" }}>
-      {/* Header */}
-      <div style={{ background: "var(--ink)", color: "var(--cream)", padding: "3.5rem 1.25rem 4rem", position: "relative", overflow: "hidden" }}>
-        <div style={{ position: "absolute", top: "-30%", right: "-5%", width: 400, height: 400, borderRadius: "50%", background: "var(--amber)", opacity: 0.12, filter: "blur(80px)", pointerEvents: "none" }} />
+      {/* Header — vibrant */}
+      <div style={{
+        background: "linear-gradient(135deg, #fff4f7 0%, #ffdbe6 30%, #ffc2d4 60%, #f8a8e3 85%, #d4b3ff 100%)",
+        color: "var(--ink)",
+        padding: "4rem 1.25rem 4rem",
+        position: "relative",
+        overflow: "hidden",
+        borderBottom: "1px solid rgba(0,0,0,0.05)",
+      }}>
+        <div style={{ position: "absolute", top: "-25%", right: "-5%", width: 480, height: 480, borderRadius: "50%", background: "#ff3d6e", opacity: 0.30, filter: "blur(100px)", pointerEvents: "none" }} />
+        <div style={{ position: "absolute", bottom: "-30%", left: "-8%", width: 420, height: 420, borderRadius: "50%", background: "#7c3aed", opacity: 0.25, filter: "blur(100px)", pointerEvents: "none" }} />
+        <div style={{ position: "absolute", top: "20%", left: "45%", width: 260, height: 260, borderRadius: "50%", background: "#f59e0b", opacity: 0.22, filter: "blur(70px)", pointerEvents: "none" }} />
+        <div style={{ position: "absolute", top: "15%", right: "18%", fontSize: 24, opacity: 0.75, pointerEvents: "none" }}>✨</div>
+        <div style={{ position: "absolute", bottom: "18%", left: "12%", fontSize: 22, opacity: 0.65, pointerEvents: "none" }}>💖</div>
         <div style={{ position: "relative", zIndex: 1, maxWidth: 900, margin: "0 auto" }}>
-          <p style={{ fontSize: 11, fontWeight: 800, color: "var(--amber)", letterSpacing: "0.14em", textTransform: "uppercase", margin: "0 0 0.5rem" }}>Learn</p>
-          <h1 className="d-lg" style={{ color: "var(--cream)", margin: "0 0 0.75rem" }}>Dorm Room Guides</h1>
-          <p style={{ color: "rgba(254,252,248,0.55)", fontSize: 15, margin: 0, maxWidth: 480 }}>
+          <p style={{ fontSize: 11, fontWeight: 800, color: "#ff3d6e", letterSpacing: "0.14em", textTransform: "uppercase", margin: "0 0 0.75rem" }}>Learn</p>
+          <h1 className="d-lg" style={{ color: "var(--ink)", margin: "0 0 0.75rem" }}>
+            Dorm Room{" "}
+            <span style={{
+              background: "linear-gradient(90deg, #ff3d6e 0%, #f59e0b 50%, #7c3aed 100%)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              backgroundClip: "text",
+            }}>Guides</span>
+          </h1>
+          <p style={{ color: "rgba(10,10,15,0.65)", fontSize: 16, margin: 0, maxWidth: 520, lineHeight: 1.55, fontWeight: 500 }}>
             Everything you actually need to know before move-in day.
           </p>
         </div>
@@ -72,18 +91,22 @@ export default function GuidesPage() {
       {/* Guides */}
       <div style={{ maxWidth: 900, margin: "0 auto", padding: "3.5rem 1.25rem 6rem" }}>
         <div style={{ display: "flex", flexDirection: "column", gap: "4rem" }}>
-          {GUIDES.map(guide => (
-            <article key={guide.slug} style={{ background: "var(--cream2)", borderRadius: 24, overflow: "hidden" }}>
+          {GUIDES.map((guide, i) => {
+            const accents = ["#ff3d6e", "#7c3aed", "#f59e0b"];
+            const accent = accents[i % accents.length];
+            return (
+            <article key={guide.slug} style={{ background: "#fff", borderRadius: 24, overflow: "hidden", border: "1px solid rgba(0,0,0,0.06)", boxShadow: "0 20px 40px -20px rgba(10,10,15,0.1)", position: "relative" }}>
+              <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 5, background: `linear-gradient(90deg, ${accent} 0%, #ffb3c8 100%)` }} />
               {/* Guide header */}
               <div style={{ padding: "2rem 2rem 1.5rem", borderBottom: "1px solid rgba(0,0,0,0.06)" }}>
                 <div style={{ display: "flex", alignItems: "flex-start", gap: "1rem", flexWrap: "wrap" }}>
-                  <span style={{ fontSize: 36, flexShrink: 0 }}>{guide.emoji}</span>
+                  <div style={{ flexShrink: 0, width: 56, height: 56, borderRadius: 16, background: `linear-gradient(135deg, ${accent} 0%, #f472b6 100%)`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 28, boxShadow: `0 10px 24px -8px ${accent}88` }}>{guide.emoji}</div>
                   <div style={{ flex: 1 }}>
                     <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", marginBottom: "0.75rem" }}>
                       {guide.tags.map(tag => (
-                        <span key={tag} style={{ background: "rgba(0,0,0,0.07)", borderRadius: 999, padding: "0.2rem 0.7rem", fontSize: 11, fontWeight: 700, color: "var(--muted)" }}>{tag}</span>
+                        <span key={tag} style={{ background: `${accent}15`, color: accent, borderRadius: 999, padding: "0.2rem 0.7rem", fontSize: 11, fontWeight: 800 }}>{tag}</span>
                       ))}
-                      <span style={{ fontSize: 11, color: "var(--muted)", padding: "0.2rem 0" }}>{guide.time}</span>
+                      <span style={{ fontSize: 11, color: "var(--muted)", padding: "0.2rem 0", fontWeight: 600 }}>{guide.time}</span>
                     </div>
                     <h2 style={{ fontWeight: 900, fontSize: 22, margin: "0 0 0.4rem", lineHeight: 1.2 }}>{guide.title}</h2>
                     <p style={{ fontSize: 15, color: "var(--muted)", margin: 0, lineHeight: 1.5 }}>{guide.subtitle}</p>
@@ -96,7 +119,7 @@ export default function GuidesPage() {
                 <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
                   {guide.steps.map(step => (
                     <div key={step.n} style={{ display: "flex", gap: "1.25rem" }}>
-                      <div style={{ flexShrink: 0, width: 36, height: 36, borderRadius: 10, background: "var(--ink)", color: "var(--cream)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11, fontWeight: 800 }}>
+                      <div style={{ flexShrink: 0, width: 36, height: 36, borderRadius: 10, background: `linear-gradient(135deg, ${accent} 0%, #f472b6 100%)`, color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11, fontWeight: 800 }}>
                         {step.n}
                       </div>
                       <div>
@@ -109,21 +132,22 @@ export default function GuidesPage() {
 
                 {/* CTA */}
                 <div style={{ marginTop: "2rem", paddingTop: "1.5rem", borderTop: "1px solid rgba(0,0,0,0.06)", display: "flex", alignItems: "center", gap: "1rem", flexWrap: "wrap" }}>
-                  <a href="/schools" className="btn btn-dark" style={{ padding: "0.6rem 1.25rem", minHeight: "auto", fontSize: 14 }}>
+                  <a href="/schools" className="btn btn-pink" style={{ padding: "0.6rem 1.25rem", minHeight: "auto", fontSize: 14 }}>
                     Find My School →
                   </a>
                   <a
                     href={amazonSearch(`dorm room ${guide.tags[0]?.toLowerCase() ?? "essentials"}`)}
                     target="_blank"
                     rel="noopener noreferrer sponsored"
-                    style={{ fontSize: 13, fontWeight: 700, color: "var(--muted)", textDecoration: "none" }}
+                    style={{ fontSize: 13, fontWeight: 800, color: accent, textDecoration: "none" }}
                   >
                     Shop on Amazon →
                   </a>
                 </div>
               </div>
             </article>
-          ))}
+            );
+          })}
         </div>
       </div>
     </div>

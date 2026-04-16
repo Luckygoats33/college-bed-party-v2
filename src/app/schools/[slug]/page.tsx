@@ -4,7 +4,7 @@ import { getSchool, nearbySchools, schools, getSchoolColors, schoolLogoBadge, ge
 import { SchoolLogo } from "@/components/SchoolLogo";
 import { ProductImage } from "@/components/ProductImage";
 import { PRODUCTS, CATEGORIES, CATEGORY_PHOTOS } from "@/lib/products";
-import { amazonSearch, amazonImage } from "@/lib/amazon";
+import { amazonSearch, amazonImage, productImage } from "@/lib/amazon";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -49,75 +49,75 @@ export default async function SchoolPage({ params }: PageProps) {
   const domain = getSchoolDomain(school);
   const svgBadge = schoolLogoBadge(school, 120);
   const logoFallback = schoolLogoBadge(school, 80);
-  const heroTextColor = "#fff"; // always white on colored hero with overlay
 
   const mustHaveCount = PRODUCTS.filter(p => p.tags.includes("must-have")).length;
 
   return (
     <div style={{ color: "var(--ink)" }}>
 
-      {/* ══ HERO — FULL BLEED, SCHOOL COLORS ══════════════════ */}
+      {/* ══ HERO — BRIGHT, AIRY, WHITES WITH SCHOOL-COLOR ACCENTS ══ */}
       <section style={{
-        background: `linear-gradient(135deg, ${pc} 50%, ${sc} 50%)`,
-        color: heroTextColor,
-        minHeight: "70vh",
+        background: "linear-gradient(180deg, #fff 0%, #fff5f8 70%, #ffeaf1 100%)",
+        color: "var(--ink)",
+        minHeight: "62vh",
         display: "flex",
         flexDirection: "column",
         justifyContent: "flex-end",
         position: "relative",
         overflow: "hidden",
       }}>
-        {/* Dark overlay for readability */}
-        <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.38)", pointerEvents: "none" }} />
+        {/* Soft pink bloom top-right */}
+        <div style={{ position: "absolute", top: "-20%", right: "-10%", width: 520, height: 520, borderRadius: "50%", background: "#ffb3c8", opacity: 0.35, filter: "blur(100px)", pointerEvents: "none" }} />
+        {/* School primary color bloom bottom-left (subtle) */}
+        <div style={{ position: "absolute", bottom: "-15%", left: "-10%", width: 420, height: 420, borderRadius: "50%", background: pc, opacity: 0.18, filter: "blur(90px)", pointerEvents: "none" }} />
 
-        {/* Large faded logo watermark behind content */}
+        {/* Large faded logo watermark */}
         <div style={{
-          position: "absolute", top: "50%", right: "-5%",
+          position: "absolute", top: "50%", right: "-4%",
           transform: "translateY(-50%)",
-          width: 400, height: 400,
-          opacity: 0.08,
-          filter: "blur(2px)",
+          width: 420, height: 420,
+          opacity: 0.10,
           pointerEvents: "none",
         }}>
-          <SchoolLogo espnId={espnId} domain={domain} fallbackSvg={schoolLogoBadge(school, 400)} alt="" size={400} style={{ width: 400, height: 400 }} />
+          <SchoolLogo espnId={espnId} domain={domain} fallbackSvg={schoolLogoBadge(school, 420)} alt="" size={420} style={{ width: 420, height: 420 }} />
         </div>
 
         {/* Content */}
         <div style={{ position: "relative", zIndex: 2, maxWidth: 1100, margin: "0 auto", width: "100%", padding: "5rem 1.5rem 3.5rem" }}>
-          <a href="/schools" style={{ display: "inline-flex", alignItems: "center", gap: "0.4rem", color: "rgba(255,255,255,0.55)", fontSize: 13, textDecoration: "none", marginBottom: "2.5rem" }}>
+          <a href="/schools" style={{ display: "inline-flex", alignItems: "center", gap: "0.4rem", color: "var(--muted)", fontSize: 13, textDecoration: "none", marginBottom: "2.5rem", fontWeight: 600 }}>
             ← All Schools
           </a>
 
           <div style={{ display: "flex", alignItems: "center", gap: "2rem", flexWrap: "wrap" }}>
-            {/* Big logo badge */}
+            {/* Big logo badge — bright */}
             <div style={{
               background: "#fff",
               borderRadius: 24,
               padding: 14,
-              boxShadow: "0 20px 60px rgba(0,0,0,0.4)",
+              boxShadow: `0 20px 60px ${pc}33, 0 4px 20px rgba(0,0,0,0.08)`,
               flexShrink: 0,
+              border: `2px solid ${pc}22`,
             }}>
               <SchoolLogo espnId={espnId} domain={domain} fallbackSvg={svgBadge} alt={school.shortName} size={100} />
             </div>
 
             <div>
               {school.nickname && (
-                <p style={{ fontSize: 13, fontWeight: 700, color: "rgba(255,255,255,0.6)", letterSpacing: "0.1em", textTransform: "uppercase", margin: "0 0 0.4rem" }}>
+                <p style={{ fontSize: 13, fontWeight: 800, color: pc, letterSpacing: "0.1em", textTransform: "uppercase", margin: "0 0 0.4rem" }}>
                   The {school.nickname}
                 </p>
               )}
               <h1 style={{
                 fontSize: "clamp(2.4rem, 6vw, 5rem)",
                 fontWeight: 900,
-                color: "#fff",
+                color: "var(--ink)",
                 margin: "0 0 0.5rem",
                 lineHeight: 0.95,
                 letterSpacing: "-0.03em",
-                textShadow: "0 4px 40px rgba(0,0,0,0.3)",
               }}>
                 {school.shortName}
               </h1>
-              <p style={{ color: "rgba(255,255,255,0.6)", fontSize: 15, margin: 0 }}>
+              <p style={{ color: "var(--muted)", fontSize: 15, margin: 0 }}>
                 {school.city}, {school.state}
               </p>
             </div>
@@ -126,31 +126,28 @@ export default async function SchoolPage({ params }: PageProps) {
           {/* Stats + color chips row */}
           <div style={{ display: "flex", flexWrap: "wrap", gap: "0.75rem", marginTop: "2rem", alignItems: "center" }}>
             {school.enrollment > 0 && (
-              <div style={{ background: "rgba(255,255,255,0.12)", backdropFilter: "blur(8px)", border: "1px solid rgba(255,255,255,0.2)", borderRadius: 999, padding: "0.45rem 1rem", display: "flex", alignItems: "center", gap: "0.5rem" }}>
+              <div style={{ background: "rgba(255,255,255,0.75)", backdropFilter: "blur(8px)", border: "1px solid rgba(0,0,0,0.06)", borderRadius: 999, padding: "0.45rem 1rem", display: "flex", alignItems: "center", gap: "0.5rem", boxShadow: "0 2px 10px rgba(0,0,0,0.03)" }}>
                 <span style={{ fontSize: 14 }}>🎓</span>
-                <span style={{ fontSize: 13, fontWeight: 700, color: "#fff" }}>{school.enrollment.toLocaleString()} students</span>
+                <span style={{ fontSize: 13, fontWeight: 700, color: "var(--ink)" }}>{school.enrollment.toLocaleString()} students</span>
               </div>
             )}
-            <div style={{ background: "rgba(255,255,255,0.12)", backdropFilter: "blur(8px)", border: "1px solid rgba(255,255,255,0.2)", borderRadius: 999, padding: "0.45rem 1rem", display: "flex", alignItems: "center", gap: "0.5rem" }}>
+            <div style={{ background: "rgba(255,255,255,0.75)", backdropFilter: "blur(8px)", border: "1px solid rgba(0,0,0,0.06)", borderRadius: 999, padding: "0.45rem 1rem", display: "flex", alignItems: "center", gap: "0.5rem", boxShadow: "0 2px 10px rgba(0,0,0,0.03)" }}>
               <span style={{ fontSize: 14 }}>🛍️</span>
-              <span style={{ fontSize: 13, fontWeight: 700, color: "#fff" }}>{mustHaveCount} curated picks</span>
+              <span style={{ fontSize: 13, fontWeight: 700, color: "var(--ink)" }}>{mustHaveCount} curated picks</span>
             </div>
-            <div style={{ background: "rgba(255,255,255,0.12)", backdropFilter: "blur(8px)", border: "1px solid rgba(255,255,255,0.2)", borderRadius: 999, padding: "0.45rem 1rem", display: "flex", alignItems: "center", gap: "0.5rem" }}>
+            <div style={{ background: "rgba(255,255,255,0.75)", backdropFilter: "blur(8px)", border: "1px solid rgba(0,0,0,0.06)", borderRadius: 999, padding: "0.45rem 1rem", display: "flex", alignItems: "center", gap: "0.5rem", boxShadow: "0 2px 10px rgba(0,0,0,0.03)" }}>
               <span style={{ fontSize: 14 }}>📦</span>
-              <span style={{ fontSize: 13, fontWeight: 700, color: "#fff" }}>Ships from Amazon</span>
+              <span style={{ fontSize: 13, fontWeight: 700, color: "var(--ink)" }}>Ships from Amazon</span>
             </div>
             {/* Color swatches */}
             {[pc, sc].map(color => (
-              <div key={color} style={{ display: "flex", alignItems: "center", gap: "0.4rem", background: "rgba(0,0,0,0.25)", backdropFilter: "blur(8px)", borderRadius: 999, padding: "0.3rem 0.75rem 0.3rem 0.4rem", border: "1px solid rgba(255,255,255,0.12)" }}>
-                <span style={{ width: 16, height: 16, borderRadius: "50%", background: color, border: "1.5px solid rgba(255,255,255,0.35)", display: "inline-block", flexShrink: 0 }} />
-                <span style={{ fontSize: 11, color: "rgba(255,255,255,0.7)", fontWeight: 600 }}>{color}</span>
+              <div key={color} style={{ display: "flex", alignItems: "center", gap: "0.4rem", background: "rgba(255,255,255,0.75)", backdropFilter: "blur(8px)", borderRadius: 999, padding: "0.3rem 0.75rem 0.3rem 0.4rem", border: "1px solid rgba(0,0,0,0.06)" }}>
+                <span style={{ width: 16, height: 16, borderRadius: "50%", background: color, border: "1.5px solid rgba(255,255,255,0.7)", display: "inline-block", flexShrink: 0 }} />
+                <span style={{ fontSize: 11, color: "var(--muted)", fontWeight: 700 }}>{color}</span>
               </div>
             ))}
           </div>
         </div>
-
-        {/* Bottom angled cut */}
-        <div style={{ height: 48, background: "var(--cream)", clipPath: "polygon(0 100%, 100% 100%, 100% 0)", position: "relative", zIndex: 2 }} />
       </section>
 
       {/* ══ SCHOOL COLOR ACCENT BAR ═══════════════════════════ */}
@@ -239,7 +236,7 @@ export default async function SchoolPage({ params }: PageProps) {
 
                     {/* Product image */}
                     <div style={{ aspectRatio: "1", background: "#fafafa", display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden" }}>
-                      <ProductImage src={amazonImage(product.asin)} alt={product.title} padding="0.75rem" categoryPhoto={CATEGORY_PHOTOS[product.category]} fallbackSrc={logoFallback} />
+                      <ProductImage src={productImage(product.id) || amazonImage(product.asin)} alt={product.title} padding="0.75rem" categoryPhoto={CATEGORY_PHOTOS[product.category]} fallbackSrc={logoFallback} />
                     </div>
 
                     {/* Info */}
@@ -267,29 +264,30 @@ export default async function SchoolPage({ params }: PageProps) {
         })}
       </div>
 
-      {/* ══ SCHOOL COLOR CTA BAND ═════════════════════════════ */}
+      {/* ══ BRIGHT CTA BAND ═══════════════════════════════════ */}
       <section style={{
-        background: `linear-gradient(135deg, ${pc} 50%, ${sc} 50%)`,
+        background: "linear-gradient(180deg, #fff 0%, #fff5f8 100%)",
         padding: "4rem 1.25rem",
         position: "relative",
         overflow: "hidden",
+        borderTop: `4px solid ${pc}`,
       }}>
-        <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.3)", pointerEvents: "none" }} />
+        <div style={{ position: "absolute", top: "-30%", right: "-10%", width: 360, height: 360, borderRadius: "50%", background: pc, opacity: 0.12, filter: "blur(80px)", pointerEvents: "none" }} />
         <div style={{ position: "relative", zIndex: 1, maxWidth: 1060, margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "2rem" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "1.25rem" }}>
-            <div style={{ background: "rgba(255,255,255,0.95)", borderRadius: 16, padding: 10 }}>
+            <div style={{ background: "#fff", borderRadius: 16, padding: 10, border: `1.5px solid ${pc}22`, boxShadow: `0 6px 24px ${pc}22` }}>
               <SchoolLogo espnId={espnId} domain={domain} fallbackSvg={schoolLogoBadge(school, 56)} alt={school.shortName} size={56} />
             </div>
             <div>
-              <p style={{ fontWeight: 900, fontSize: 22, color: "#fff", margin: 0, lineHeight: 1.1 }}>{school.shortName} Dorm Essentials</p>
-              <p style={{ color: "rgba(255,255,255,0.6)", fontSize: 14, margin: "0.3rem 0 0" }}>Everything you need — straight from Amazon</p>
+              <p style={{ fontWeight: 900, fontSize: 22, color: "var(--ink)", margin: 0, lineHeight: 1.1 }}>{school.shortName} Dorm Essentials</p>
+              <p style={{ color: "var(--muted)", fontSize: 14, margin: "0.3rem 0 0" }}>Everything you need — straight from Amazon</p>
             </div>
           </div>
           <a
             href={amazonSearch(`${school.shortName} dorm room essentials college`)}
             target="_blank"
             rel="noopener noreferrer sponsored"
-            style={{ background: "#fff", color: pc, fontWeight: 900, fontSize: 15, padding: "0.875rem 2rem", borderRadius: 999, textDecoration: "none", flexShrink: 0 }}
+            style={{ background: pc, color: isLight(pc) ? "#0a0a0f" : "#fff", fontWeight: 900, fontSize: 15, padding: "0.875rem 2rem", borderRadius: 999, textDecoration: "none", flexShrink: 0, boxShadow: `0 8px 24px ${pc}55` }}
           >
             Shop All on Amazon →
           </a>
@@ -337,7 +335,7 @@ export default async function SchoolPage({ params }: PageProps) {
 
       {/* ══ NEARBY SCHOOLS ════════════════════════════════════ */}
       {nearby.length > 0 && (
-        <section style={{ background: "var(--cream2)", padding: "4rem 1.25rem" }}>
+        <section style={{ background: "linear-gradient(180deg, #fff 0%, #fff5f8 100%)", padding: "4rem 1.25rem", borderTop: "1px solid rgba(0,0,0,0.05)" }}>
           <div style={{ maxWidth: 1060, margin: "0 auto" }}>
             <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", marginBottom: "1.5rem", flexWrap: "wrap", gap: "0.75rem" }}>
               <div>
@@ -356,23 +354,25 @@ export default async function SchoolPage({ params }: PageProps) {
                     href={`/schools/${s.slug}`}
                     className="card"
                     style={{
-                      background: `linear-gradient(135deg, ${spc} 50%, ${ssc} 50%)`,
+                      background: "#fff",
                       textDecoration: "none",
                       display: "flex",
                       flexDirection: "column",
-                      justifyContent: "flex-end",
-                      padding: "1rem",
-                      minHeight: 120,
+                      alignItems: "center",
+                      padding: "1rem 0.875rem 0.875rem",
+                      minHeight: 150,
                       position: "relative",
+                      border: "1px solid rgba(0,0,0,0.06)",
+                      overflow: "hidden",
                     }}
                   >
-                    <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.28)", borderRadius: "inherit" }} />
-                    <div style={{ position: "absolute", top: 10, right: 10, background: "rgba(255,255,255,0.95)", borderRadius: 9, padding: 4 }}>
-                      <SchoolLogo espnId={getSchoolEspnId(s)} domain={getSchoolDomain(s)} fallbackSvg={schoolLogoBadge(s, 32)} alt={s.shortName} size={32} />
+                    <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 4, background: `linear-gradient(90deg, ${spc} 50%, ${ssc} 50%)` }} />
+                    <div style={{ marginTop: "0.5rem", marginBottom: "0.5rem", display: "flex", alignItems: "center", justifyContent: "center", width: 56, height: 56 }}>
+                      <SchoolLogo espnId={getSchoolEspnId(s)} domain={getSchoolDomain(s)} fallbackSvg={schoolLogoBadge(s, 56)} alt={s.shortName} size={56} />
                     </div>
-                    <div style={{ position: "relative", zIndex: 1 }}>
-                      <p style={{ color: "#fff", fontWeight: 900, fontSize: 13, margin: 0, lineHeight: 1.2 }}>{s.shortName}</p>
-                      {s.nickname && <p style={{ color: "rgba(255,255,255,0.55)", fontSize: 11, margin: 0 }}>{s.nickname}</p>}
+                    <div style={{ textAlign: "center" }}>
+                      <p style={{ color: "var(--ink)", fontWeight: 900, fontSize: 13, margin: 0, lineHeight: 1.2 }}>{s.shortName}</p>
+                      {s.nickname && <p style={{ color: "var(--muted)", fontSize: 11, margin: "0.125rem 0 0" }}>{s.nickname}</p>}
                     </div>
                   </a>
                 );

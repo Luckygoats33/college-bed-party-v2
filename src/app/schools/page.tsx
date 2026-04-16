@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { schools, schoolsByState, getSchoolColors, schoolLogoBadge, getSchoolEspnId, getSchoolDomain } from "@/lib/schools";
+import { schools, schoolsByState, getSchoolColors, schoolLogoBadge, getSchoolEspnId, getSchoolDomain, featuredSchools } from "@/lib/schools";
 import { SchoolLogo } from "@/components/SchoolLogo";
 
 export const metadata: Metadata = {
@@ -52,16 +52,23 @@ export default async function SchoolsPage({ searchParams }: PageProps) {
 
   return (
     <div style={{ color: "var(--ink)" }}>
-      {/* ══ HEADER ═══════════════════════════════════════════ */}
-      <div style={{ background: "var(--ink)", color: "var(--cream)", padding: "3rem 1.25rem 3.5rem", position: "relative", overflow: "hidden" }}>
+      {/* ══ HEADER — bright/airy ═════════════════════════════ */}
+      <div style={{
+        background: "linear-gradient(180deg, #fff 0%, #fff5f8 60%, #ffeaf1 100%)",
+        color: "var(--ink)",
+        padding: "3.5rem 1.25rem 3.5rem",
+        position: "relative",
+        overflow: "hidden",
+        borderBottom: "1px solid rgba(0,0,0,0.05)",
+      }}>
         <div style={{ position: "absolute", inset: 0, pointerEvents: "none" }}>
-          <div style={{ position: "absolute", top: "-30%", right: "-10%", width: 400, height: 400, borderRadius: "50%", background: "var(--accent)", opacity: 0.12, filter: "blur(80px)" }} />
-          <div style={{ position: "absolute", bottom: "-20%", left: "20%", width: 300, height: 300, borderRadius: "50%", background: "var(--violet)", opacity: 0.1, filter: "blur(60px)" }} />
+          <div style={{ position: "absolute", top: "-25%", right: "-8%", width: 420, height: 420, borderRadius: "50%", background: "#ff3d6e", opacity: 0.10, filter: "blur(90px)" }} />
+          <div style={{ position: "absolute", bottom: "-25%", left: "15%", width: 340, height: 340, borderRadius: "50%", background: "#ffb3c8", opacity: 0.18, filter: "blur(70px)" }} />
         </div>
         <div style={{ position: "relative", zIndex: 1, maxWidth: 1280, margin: "0 auto" }}>
-          <p style={{ fontSize: 11, fontWeight: 800, color: "var(--accent)", letterSpacing: "0.14em", textTransform: "uppercase", margin: "0 0 0.5rem" }}>Browse</p>
-          <h1 className="d-lg" style={{ color: "var(--cream)", margin: "0 0 0.5rem" }}>All Schools</h1>
-          <p style={{ color: "rgba(254,252,248,0.5)", fontSize: 14, margin: 0 }}>
+          <p style={{ fontSize: 11, fontWeight: 800, color: "#ff3d6e", letterSpacing: "0.14em", textTransform: "uppercase", margin: "0 0 0.5rem" }}>Browse</p>
+          <h1 className="d-lg" style={{ color: "var(--ink)", margin: "0 0 0.5rem" }}>All Schools</h1>
+          <p style={{ color: "rgba(10,10,15,0.55)", fontSize: 14, margin: 0 }}>
             {filtered.length.toLocaleString()} school{filtered.length !== 1 ? "s" : ""}
             {q && ` matching "${q}"`}
             {stateFilter && ` in ${STATE_NAMES[stateFilter] ?? stateFilter}`}
@@ -71,7 +78,7 @@ export default async function SchoolsPage({ searchParams }: PageProps) {
       </div>
 
       {/* ══ SEARCH + FILTERS ══════════════════════════════════ */}
-      <div style={{ background: "var(--cream2)", borderBottom: "1px solid rgba(0,0,0,0.06)", padding: "1.25rem", position: "sticky", top: 64, zIndex: 40 }}>
+      <div style={{ background: "var(--cream2)", borderBottom: "1px solid rgba(0,0,0,0.06)", padding: "1.25rem", position: "sticky", top: "var(--header-h, 128px)", zIndex: 40 }}>
         <form method="get" style={{ maxWidth: 1280, margin: "0 auto", display: "flex", flexWrap: "wrap", gap: "0.625rem", alignItems: "center" }}>
           <input
             name="q"
@@ -112,8 +119,67 @@ export default async function SchoolsPage({ searchParams }: PageProps) {
         </form>
       </div>
 
+      {/* ══ FEATURED SCHOOLS (only when no filters) ═══════════ */}
+      {!hasFilters && (
+        <div style={{ maxWidth: 1280, margin: "0 auto", padding: "2.5rem 1.25rem 0.5rem" }}>
+          <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", flexWrap: "wrap", gap: "0.5rem", marginBottom: "1.25rem" }}>
+            <div>
+              <p style={{ fontSize: 11, fontWeight: 800, color: "#ff3d6e", letterSpacing: "0.14em", textTransform: "uppercase", margin: "0 0 0.375rem" }}>Featured</p>
+              <h2 style={{ fontWeight: 900, fontSize: 26, margin: 0, letterSpacing: "-0.02em" }}>Top Schools</h2>
+            </div>
+            <p style={{ fontSize: 12, color: "var(--muted)", margin: 0, fontWeight: 600 }}>Most popular destinations</p>
+          </div>
+          <div style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fill, minmax(170px, 1fr))",
+            gap: 10,
+          }}>
+            {featuredSchools(12).map(school => {
+              const [spc, ssc] = getSchoolColors(school);
+              return (
+                <a
+                  key={school.slug}
+                  href={`/schools/${school.slug}`}
+                  className="card"
+                  style={{
+                    background: "linear-gradient(180deg, #fff 0%, #fff8fa 100%)",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "flex-start",
+                    padding: "1rem 0.875rem 0.875rem",
+                    minHeight: 170,
+                    textDecoration: "none",
+                    position: "relative",
+                    border: "1px solid rgba(255,61,110,0.15)",
+                    overflow: "hidden",
+                    boxShadow: "0 8px 20px -10px rgba(255,61,110,0.2)",
+                  }}
+                >
+                  <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 4, background: `linear-gradient(90deg, ${spc} 50%, ${ssc} 50%)` }} />
+                  <span style={{ position: "absolute", top: 8, right: 8, background: "#ff3d6e", color: "#fff", borderRadius: 999, padding: "0.12rem 0.45rem", fontSize: 9, fontWeight: 800, letterSpacing: "0.04em" }}>★</span>
+                  <div style={{ marginTop: "0.5rem", marginBottom: "0.625rem", display: "flex", alignItems: "center", justifyContent: "center", width: 64, height: 64 }}>
+                    <SchoolLogo espnId={getSchoolEspnId(school)} domain={getSchoolDomain(school)} fallbackSvg={schoolLogoBadge(school, 64)} alt={school.shortName} size={64} />
+                  </div>
+                  <div style={{ textAlign: "center" }}>
+                    <p style={{ color: "var(--ink)", fontWeight: 900, fontSize: 13, margin: 0, lineHeight: 1.2 }}>{school.shortName}</p>
+                    {school.nickname && (
+                      <p style={{ color: "var(--muted)", fontSize: 10, margin: "0.125rem 0 0" }}>{school.nickname}</p>
+                    )}
+                    <p style={{ color: "var(--muted)", fontSize: 10, fontWeight: 600, margin: "0.25rem 0 0" }}>{school.city}, {school.state}</p>
+                  </div>
+                </a>
+              );
+            })}
+          </div>
+          <div style={{ marginTop: "2.5rem", paddingTop: "2rem", borderTop: "1px solid rgba(0,0,0,0.06)" }}>
+            <p style={{ fontSize: 11, fontWeight: 800, color: "var(--muted)", letterSpacing: "0.14em", textTransform: "uppercase", margin: 0 }}>Or browse all {filtered.length.toLocaleString()}</p>
+          </div>
+        </div>
+      )}
+
       {/* ══ RESULTS GRID ══════════════════════════════════════ */}
-      <div style={{ maxWidth: 1280, margin: "0 auto", padding: "2rem 1.25rem 5rem" }}>
+      <div style={{ maxWidth: 1280, margin: "0 auto", padding: hasFilters ? "2rem 1.25rem 5rem" : "1rem 1.25rem 5rem" }}>
         {filtered.length === 0 ? (
           <div style={{ textAlign: "center", padding: "6rem 1rem" }}>
             <p style={{ fontSize: 48, marginBottom: "1rem" }}>🎓</p>
@@ -133,36 +199,44 @@ export default async function SchoolsPage({ searchParams }: PageProps) {
               gridTemplateColumns: "repeat(auto-fill, minmax(170px, 1fr))",
               gap: 10,
             }}>
-              {showing.map(school => (
-                <a
-                  key={school.slug}
-                  href={`/schools/${school.slug}`}
-                  className="card"
-                  style={{
-                    background: `linear-gradient(135deg, ${getSchoolColors(school)[0]} 50%, ${getSchoolColors(school)[1]} 50%)`,
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "flex-end",
-                    padding: "1rem",
-                    minHeight: 120,
-                    textDecoration: "none",
-                    position: "relative",
-                  }}
-                >
-                  <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.28)", borderRadius: "inherit" }} />
-                  {/* Logo badge */}
-                  <div style={{ position: "absolute", top: 8, right: 8, background: "rgba(255,255,255,0.95)", borderRadius: 8, padding: 3 }}>
-                    <SchoolLogo espnId={getSchoolEspnId(school)} domain={getSchoolDomain(school)} fallbackSvg={schoolLogoBadge(school, 28)} alt={school.shortName} size={28} />
-                  </div>
-                  <div style={{ position: "relative", zIndex: 1 }}>
-                    <p style={{ color: "rgba(255,255,255,0.55)", fontSize: 10, fontWeight: 600, margin: 0 }}>{school.city}, {school.state}</p>
-                    <p style={{ color: "#fff", fontWeight: 900, fontSize: 13, margin: 0, lineHeight: 1.2 }}>{school.shortName}</p>
-                    {school.nickname && (
-                      <p style={{ color: "rgba(255,255,255,0.5)", fontSize: 10, margin: 0 }}>{school.nickname}</p>
-                    )}
-                  </div>
-                </a>
-              ))}
+              {showing.map(school => {
+                const [spc, ssc] = getSchoolColors(school);
+                return (
+                  <a
+                    key={school.slug}
+                    href={`/schools/${school.slug}`}
+                    className="card"
+                    style={{
+                      background: "#fff",
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      justifyContent: "flex-start",
+                      padding: "1rem 0.875rem 0.875rem",
+                      minHeight: 160,
+                      textDecoration: "none",
+                      position: "relative",
+                      border: "1px solid rgba(0,0,0,0.06)",
+                      overflow: "hidden",
+                      transition: "transform 0.15s, box-shadow 0.15s",
+                    }}
+                  >
+                    {/* top school-color accent bar */}
+                    <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 4, background: `linear-gradient(90deg, ${spc} 50%, ${ssc} 50%)` }} />
+                    {/* Large centered logo */}
+                    <div style={{ marginTop: "0.5rem", marginBottom: "0.625rem", display: "flex", alignItems: "center", justifyContent: "center", width: 64, height: 64 }}>
+                      <SchoolLogo espnId={getSchoolEspnId(school)} domain={getSchoolDomain(school)} fallbackSvg={schoolLogoBadge(school, 64)} alt={school.shortName} size={64} />
+                    </div>
+                    <div style={{ textAlign: "center" }}>
+                      <p style={{ color: "var(--ink)", fontWeight: 900, fontSize: 13, margin: 0, lineHeight: 1.2 }}>{school.shortName}</p>
+                      {school.nickname && (
+                        <p style={{ color: "var(--muted)", fontSize: 10, margin: "0.125rem 0 0" }}>{school.nickname}</p>
+                      )}
+                      <p style={{ color: "var(--muted)", fontSize: 10, fontWeight: 600, margin: "0.25rem 0 0" }}>{school.city}, {school.state}</p>
+                    </div>
+                  </a>
+                );
+              })}
             </div>
           </>
         )}
